@@ -48,7 +48,7 @@ class TeacherClassroomPage extends StatelessWidget {
                 return ListTile(
                   title: Text(p.title),
                   subtitle: Text(p.instructions),
-                  trailing: Text(p.id),
+                  trailing: Text(p.points.toString()),
                 );
               }),
         );

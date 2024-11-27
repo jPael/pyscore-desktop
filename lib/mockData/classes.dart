@@ -4,7 +4,7 @@ class Classes {
       "id": "1",
       "classroomName": "Python 101",
       "section": "A",
-      "owner": "Teacher1",
+      "owner": "Catherine Alimboyong",
       "posts": [
         {
           "id": "1",
@@ -32,7 +32,7 @@ class Classes {
           "id": "3",
           "title": "Set Up a Node.js Server",
           "instructions":
-              "Create a basic Node.js server that responds with 'Hello, World!' when accessed via a browser.",
+              "Create a basic Node.js server that responds with 'Hello, World!' when accessed via a browser. Create a basic Node.js server that responds with 'Hello, World!' when accessed via a browser. Create a basic Node.js server that responds with 'Hello, World!' when accessed via a browser.",
           "class": "Backend Development",
           "points": 75,
           "due": DateTime.parse("2024-12-01 23:59:59"),
@@ -45,13 +45,13 @@ class Classes {
       "id": "2",
       "classroomName": "Web Development",
       "section": "B",
-      "owner": "Teacher2",
+      "owner": "Melbrick Alba Evallar",
     },
     {
       "id": "3",
-      "classroomName": "Data Science with Python",
+      "classroomName": "Data Science with Python and Visual Basic's .NET",
       "section": "C",
-      "owner": "Teacher3",
+      "owner": "Coravil Joy Avila",
     },
   ];
 }

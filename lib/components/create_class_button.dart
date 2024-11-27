@@ -23,7 +23,6 @@ class _CreateClassButtonState extends State<CreateClassButton> {
     final String section = sectionController.text;
     const String owner = "Daisy Matlih";
 
-    MyClassrooms myClassroom;
     Classroom classroom = Classroom(id, cName, section, owner, []);
 
     Navigator.pop(context);

@@ -17,6 +17,16 @@ dependencies:
    provider: ^6.1.2
    postgres: ^3.4.4
    intl: ^0.20.0
+   sqflite: ^2.2.6
+   path: ^1.8.3
+   path_provider: ^2.0.14
+   uuid: ^4.5.1
+   fluttertoast: ^8.2.8
+   flutter_code_editor: ^0.3.2
+   highlight: ^0.7.0
+   filesystem_picker: ^4.1.0
+   flython:
+      git: https://github.com/jPael/flython.git
 
 dev_dependencies:
    flutter_test:

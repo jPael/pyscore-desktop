@@ -9,7 +9,8 @@ class CustomInput extends StatefulWidget {
       this.isPassword = false,
       this.validator,
       this.minLine,
-      this.maxLine});
+      this.maxLine,
+      this.enabled = true});
 
   final TextEditingController controller;
   final bool isPassword;
@@ -18,6 +19,7 @@ class CustomInput extends StatefulWidget {
   final FormFieldValidator<String>? validator;
   final int? minLine;
   final int? maxLine;
+  final bool enabled;
 
   @override
   State<CustomInput> createState() => _CustomInputState();
@@ -38,10 +40,11 @@ class _CustomInputState extends State<CustomInput> {
         maxLines: !widget.isPassword ? widget.maxLine : 1,
         minLines: !widget.isPassword ? widget.minLine : null,
         obscureText: widget.isPassword && !hidePassword,
+        enabled: widget.enabled,
         controller: widget.controller,
         decoration: InputDecoration(
             labelText: widget.labelText,
-            hintText: widget.hintText.isEmpty ? "" : widget.hintText,
+            hintText: widget.hintText ?? "",
             border: const OutlineInputBorder(),
             suffixIcon: widget.isPassword
                 ? passwordVisibilityToggle(

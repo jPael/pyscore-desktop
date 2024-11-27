@@ -1,8 +1,11 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:pyscore/components/custom_button.dart';
 import 'package:pyscore/components/custom_date_picker.dart';
 import 'package:pyscore/components/custom_input.dart';
+import 'package:pyscore/components/custom_timer_input.dart';
 import 'package:pyscore/models/classroom.dart';
 import 'package:pyscore/models/my_classrooms.dart';
 import 'package:pyscore/models/posts.dart';
@@ -27,6 +30,11 @@ class _TeacherCreatePostState extends State<TeacherCreatePost> {
   final TextEditingController pointsController = TextEditingController();
   final TextEditingController dueController = TextEditingController();
 
+  // Timer
+  final TextEditingController hoursController = TextEditingController();
+  final TextEditingController minutesController = TextEditingController();
+  final TextEditingController secondsController = TextEditingController();
+
   void handleChangeDate(DateTime date) {
     setState(() {
       dueDate = date;
@@ -40,7 +48,12 @@ class _TeacherCreatePostState extends State<TeacherCreatePost> {
     final String points = pointsController.text;
     final String due = dueDate.toString();
 
-    Posts p = Posts(id, title, instructions, points, due);
+    Posts p = Posts(
+        id: id,
+        title: title,
+        instructions: instructions,
+        points: int.parse(points),
+        due: due);
     context.read<MyClassrooms>().createPost(widget.classroom, p);
 
     Navigator.pop(context);
@@ -85,6 +98,14 @@ class _TeacherCreatePostState extends State<TeacherCreatePost> {
                     hintText: "",
                     labelText: "Instructions",
                     minLine: 5,
+                  ),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  CustomTimerInput(
+                    hoursController: hoursController,
+                    minutesController: minutesController,
+                    secondsController: secondsController,
                   ),
                   const SizedBox(
                     height: 12,

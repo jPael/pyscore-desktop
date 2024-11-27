@@ -40,14 +40,14 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
         // endDrawer: ClassDisplayDrawer(selectedClass: openedClass),
         body: Consumer<MyClassrooms>(
           builder: (context, myClassrooms, child) {
-            final classroom = myClassrooms.myClassrooms;
-            bool hasClasses = classroom.length > 0;
+            final classrooms = myClassrooms.myClassrooms;
+            bool hasClasses = classrooms.isNotEmpty;
 
             return Column(
               children: [
                 hasClasses
                     ? TeacherClassesDisplay(
-                        classrooms: classroom,
+                        classrooms: classrooms,
                       )
                     : TeacherNoClasses(),
               ],

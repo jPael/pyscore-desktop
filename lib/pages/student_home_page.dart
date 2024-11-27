@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:pyscore/components/class_display_drawer.dart';
+import 'package:pyscore/components/join_class.dart';
+import 'package:pyscore/components/custom_button.dart';
 import 'package:pyscore/components/student_classes_display.dart';
 import 'package:pyscore/components/student_drawer.dart';
 import 'package:pyscore/components/student_no_classes.dart';
+import 'package:pyscore/models/classroom.dart';
 
 class StudentHomePage extends StatefulWidget {
   const StudentHomePage({super.key});
@@ -14,10 +17,9 @@ class StudentHomePage extends StatefulWidget {
 class _StudentHomePageState extends State<StudentHomePage> {
   bool hasClasses = true;
 
-  Map<String, dynamic> openedClass = {};
+  Classroom? openedClass;
 
-  void handleViewClass(
-      Map<String, dynamic> selectedClass, BuildContext context) {
+  void handleViewClass(Classroom selectedClass, BuildContext context) {
     setState(() {
       openedClass = selectedClass;
     });
@@ -34,10 +36,17 @@ class _StudentHomePageState extends State<StudentHomePage> {
         backgroundColor: Colors.blue,
         iconTheme: const IconThemeData(
             color: Colors.white), // Set drawer icon color to white
-        actions: [Container()],
+        actions: const [
+          Padding(
+            padding: EdgeInsets.only(right: 8.0),
+            child: Row(
+              children: [JoinClass()],
+            ),
+          )
+        ],
       ),
       drawer: const StudentDrawer(),
-      endDrawer: ClassDisplayDrawer(selectedClass: openedClass),
+      endDrawer: ClassDisplayDrawer(selectedClass: openedClass ?? null),
       body: Column(
         children: [
           hasClasses

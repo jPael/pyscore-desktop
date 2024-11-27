@@ -19,17 +19,17 @@ class StudentDrawer extends StatelessWidget {
             ),
           ),
           const Divider(),
-          ListTile(
-            leading: const Icon(Icons.school),
-            title: const Text('Enrolled Classes'),
-            onTap: () {
-              Navigator.pop(context);
+          // ListTile(
+          //   leading: const Icon(Icons.school),
+          //   title: const Text('Enrolled Classes'),
+          //   onTap: () {
+          //     Navigator.pop(context);
 
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => const Enrolledclasses(),
-              ));
-            },
-          ),
+          //     Navigator.of(context).push(MaterialPageRoute(
+          //       builder: (context) => const Enrolledclasses(),
+          //     ));
+          //   },
+          // ),
           // ListTile(
           //   leading: const Icon(Icons.archive),
           //   title: const Text('Archiveds Classes'),
