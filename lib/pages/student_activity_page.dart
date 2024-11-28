@@ -53,7 +53,7 @@ class _StudentActivityPageState extends State<StudentActivityPage> {
                     handleActivityFinish: handleActivityFinish,
                     isDone: isDone,
                   ),
-                  CodeRunnerConsole()
+                  const CodeRunnerConsole()
                 ],
               ),
             ),

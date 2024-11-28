@@ -12,10 +12,10 @@ class CustomDatePicker extends StatefulWidget {
   final Function(DateTime) handleChange;
 
   @override
-  _CustomDatePickerState createState() => _CustomDatePickerState();
+  CustomDatePickerState createState() => CustomDatePickerState();
 }
 
-class _CustomDatePickerState extends State<CustomDatePicker> {
+class CustomDatePickerState extends State<CustomDatePicker> {
   void _showDatePickerDialog(BuildContext context) {
     showDatePicker(
       context: context,
@@ -28,6 +28,7 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
       }
 
       showTimePicker(
+        // ignore: use_build_context_synchronously
         context: context,
         initialTime: TimeOfDay.now(),
       ).then((selectedTime) {

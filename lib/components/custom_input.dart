@@ -44,7 +44,7 @@ class _CustomInputState extends State<CustomInput> {
         controller: widget.controller,
         decoration: InputDecoration(
             labelText: widget.labelText,
-            hintText: widget.hintText ?? "",
+            hintText: widget.hintText,
             border: const OutlineInputBorder(),
             suffixIcon: widget.isPassword
                 ? passwordVisibilityToggle(

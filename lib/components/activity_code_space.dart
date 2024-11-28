@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_code_editor/flutter_code_editor.dart';
+// ignore: depend_on_referenced_packages
 import 'package:flutter_highlight/themes/arduino-light.dart';
 import 'package:highlight/languages/python.dart';
 import 'package:pyscore/components/code_runner_button.dart';
@@ -16,10 +17,10 @@ class ActivityCodeSpace extends StatefulWidget {
   final bool isDone;
 
   @override
-  _ActivityCodeSpaceState createState() => _ActivityCodeSpaceState();
+  ActivityCodeSpaceState createState() => ActivityCodeSpaceState();
 }
 
-class _ActivityCodeSpaceState extends State<ActivityCodeSpace> {
+class ActivityCodeSpaceState extends State<ActivityCodeSpace> {
   bool hasNotSaved = true;
   final controller = CodeController(language: python);
 
@@ -45,7 +46,7 @@ class _ActivityCodeSpaceState extends State<ActivityCodeSpace> {
   }
 
   void changesMade(String value) {
-    print(controller.text);
+    // print(controller.text);
 
     setState(() {
       hasNotSaved = true;

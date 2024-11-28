@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pyscore/components/loginCarousel.dart';
+import 'package:pyscore/components/login_carousel.dart';
 import 'package:pyscore/components/student_signin_form.dart';
 import 'package:pyscore/components/student_signup_form.dart';
 

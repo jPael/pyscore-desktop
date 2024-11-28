@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pyscore/pages/landing_page.dart';
-import 'package:pyscore/student/pages/enrolled_classes.dart';
 
 class StudentDrawer extends StatelessWidget {
   const StudentDrawer({super.key});

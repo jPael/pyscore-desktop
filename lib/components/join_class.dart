@@ -6,13 +6,12 @@ class JoinClass extends StatefulWidget {
   const JoinClass({super.key});
 
   @override
-  _JoinClassState createState() => _JoinClassState();
+  JoinClassState createState() => JoinClassState();
 }
 
-class _JoinClassState extends State<JoinClass> {
+class JoinClassState extends State<JoinClass> {
   final TextEditingController codeController = TextEditingController();
 
-  @override
   Future<void> showJoinClassDialog(BuildContext context) => showDialog(
       context: context,
       builder: (BuildContext context) => Dialog(
@@ -44,7 +43,7 @@ class _JoinClassState extends State<JoinClass> {
                     const SizedBox(
                       height: 12,
                     ),
-                    Text("Enter the class code"),
+                    const Text("Enter the class code"),
                     const SizedBox(
                       height: 6,
                     ),
@@ -58,7 +57,7 @@ class _JoinClassState extends State<JoinClass> {
                     const SizedBox(
                       height: 6,
                     ),
-                    Text(
+                    const Text(
                       "Ask for the class code if you do not the code.",
                       style: TextStyle(fontSize: 12),
                     ),
@@ -80,6 +79,7 @@ class _JoinClassState extends State<JoinClass> {
             ),
           ));
 
+  @override
   Widget build(BuildContext context) {
     return Row(
       children: [

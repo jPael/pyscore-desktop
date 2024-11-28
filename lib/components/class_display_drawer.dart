@@ -18,9 +18,9 @@ class _ClassDisplayDrawerState extends State<ClassDisplayDrawer> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Posts>? posts = widget.selectedClass!.posts;
+    final List<Posts> posts = widget.selectedClass!.posts;
 
-    print("is there a posts ${posts!.isEmpty}");
+    // print("is there a posts ${posts.isEmpty}");
 
     return Drawer(
       width: MediaQuery.of(context).size.width / 1.2,
@@ -58,7 +58,7 @@ class _ClassDisplayDrawerState extends State<ClassDisplayDrawer> {
                     const SizedBox(
                       height: 5,
                     ),
-                    posts == null || posts.isEmpty
+                    posts.isEmpty
                         ? Expanded(
                             child: Padding(
                               padding:

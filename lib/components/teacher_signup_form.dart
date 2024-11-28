@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pyscore/components/teacher_signup_form_step1.dart';
 import 'package:pyscore/components/teacher_signup_form_step2.dart';
+import 'package:pyscore/models/user.dart';
 
 class TeacherSignupForm extends StatefulWidget {
   const TeacherSignupForm(
@@ -14,10 +15,10 @@ class TeacherSignupForm extends StatefulWidget {
   final bool isStep2;
 
   @override
-  _TeacherSignupFormState createState() => _TeacherSignupFormState();
+  TeacherSignupFormState createState() => TeacherSignupFormState();
 }
 
-class _TeacherSignupFormState extends State<TeacherSignupForm> {
+class TeacherSignupFormState extends State<TeacherSignupForm> {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController =
@@ -25,14 +26,22 @@ class _TeacherSignupFormState extends State<TeacherSignupForm> {
 
   final TextEditingController firstnameController = TextEditingController();
   final TextEditingController lastnameController = TextEditingController();
-  final TextEditingController sectionController = TextEditingController();
 
   void handleSignUp() async {
-    print(usernameController.text);
-    print(passwordController.text);
-    print(firstnameController.text);
-    print(lastnameController.text);
-    print(sectionController.text);
+    String username = usernameController.text;
+    String password = passwordController.text;
+    String firstname = firstnameController.text;
+    String lastname = lastnameController.text;
+
+    User user = User(
+        username: username,
+        password: password,
+        firstname: firstname,
+        lastname: lastname,
+        studentId: username,
+        userType: UserType.teacher);
+
+    await user.insertToDb();
 
     widget.handleFormSwitch(false);
   }
@@ -45,7 +54,6 @@ class _TeacherSignupFormState extends State<TeacherSignupForm> {
             handleSignupStep: widget.handleSignupStep,
             firstnameController: firstnameController,
             lastnameController: lastnameController,
-            sectionController: sectionController,
             handleSignUp: handleSignUp)
         : TeacherSignupFormStep1(
             handleFormSwitch: widget.handleFormSwitch,

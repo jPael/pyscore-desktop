@@ -9,10 +9,10 @@ class CreateClassButton extends StatefulWidget {
   const CreateClassButton({super.key});
 
   @override
-  _CreateClassButtonState createState() => _CreateClassButtonState();
+  CreateClassButtonState createState() => CreateClassButtonState();
 }
 
-class _CreateClassButtonState extends State<CreateClassButton> {
+class CreateClassButtonState extends State<CreateClassButton> {
   final TextEditingController classroomNameController = TextEditingController();
 
   final TextEditingController sectionController = TextEditingController();
@@ -82,7 +82,7 @@ class _CreateClassButtonState extends State<CreateClassButton> {
                           onTap: () => Navigator.pop(context),
                           type: "ghost",
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 12,
                         ),
                         CustomButton(

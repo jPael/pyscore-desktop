@@ -18,6 +18,7 @@ dependencies:
    postgres: ^3.4.4
    intl: ^0.20.0
    sqflite: ^2.2.6
+   sqflite_common_ffi: ^2.3.4+3
    path: ^1.8.3
    path_provider: ^2.0.14
    uuid: ^4.5.1
@@ -25,6 +26,7 @@ dependencies:
    flutter_code_editor: ^0.3.2
    highlight: ^0.7.0
    filesystem_picker: ^4.1.0
+   crypt: ^4.3.1
    flython:
       git: https://github.com/jPael/flython.git
 

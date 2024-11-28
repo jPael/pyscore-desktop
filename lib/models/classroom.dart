@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:pyscore/models/posts.dart';
 
 class Classroom {

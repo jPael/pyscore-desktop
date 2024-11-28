@@ -1,7 +1,6 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:pyscore/components/custom_button.dart';
 import 'package:pyscore/components/custom_date_picker.dart';
 import 'package:pyscore/components/custom_input.dart';
@@ -9,7 +8,6 @@ import 'package:pyscore/components/custom_timer_input.dart';
 import 'package:pyscore/models/classroom.dart';
 import 'package:pyscore/models/my_classrooms.dart';
 import 'package:pyscore/models/posts.dart';
-import 'package:provider/provider.dart';
 
 class TeacherCreatePost extends StatefulWidget {
   const TeacherCreatePost({super.key, required this.classroom});
@@ -17,11 +15,11 @@ class TeacherCreatePost extends StatefulWidget {
   final Classroom classroom;
 
   @override
-  _TeacherCreatePostState createState() => _TeacherCreatePostState();
+  TeacherCreatePostState createState() => TeacherCreatePostState();
 }
 
-class _TeacherCreatePostState extends State<TeacherCreatePost> {
-  GlobalKey<FormState> _key = GlobalKey();
+class TeacherCreatePostState extends State<TeacherCreatePost> {
+  final GlobalKey<FormState> _key = GlobalKey();
 
   DateTime dueDate = DateTime.now();
 

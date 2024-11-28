@@ -2,9 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pyscore/models/my_classrooms.dart';
 import 'package:pyscore/pages/landing_page.dart';
+import 'package:pyscore/services/db.dart';
 import 'package:pyscore/theme/theme_provider.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  sqfliteFfiInit();
+  databaseFactory = databaseFactoryFfi;
+  await Db.instance.initDb();
+
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (context) => ThemeProvider()),

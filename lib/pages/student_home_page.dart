@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pyscore/components/class_display_drawer.dart';
 import 'package:pyscore/components/join_class.dart';
-import 'package:pyscore/components/custom_button.dart';
 import 'package:pyscore/components/student_classes_display.dart';
 import 'package:pyscore/components/student_drawer.dart';
 import 'package:pyscore/components/student_no_classes.dart';
@@ -46,7 +45,7 @@ class _StudentHomePageState extends State<StudentHomePage> {
         ],
       ),
       drawer: const StudentDrawer(),
-      endDrawer: ClassDisplayDrawer(selectedClass: openedClass ?? null),
+      endDrawer: ClassDisplayDrawer(selectedClass: openedClass),
       body: Column(
         children: [
           hasClasses
@@ -56,7 +55,7 @@ class _StudentHomePageState extends State<StudentHomePage> {
               onPressed: () => setState(() {
                     hasClasses = !hasClasses;
                   }),
-              child: Text("Switch state"))
+              child: const Text("Switch state"))
         ],
       ));
 }

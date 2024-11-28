@@ -10,8 +10,7 @@ class TeacherSignupFormStep2 extends StatefulWidget {
       required this.handleSignupStep,
       required this.handleSignUp,
       required this.firstnameController,
-      required this.lastnameController,
-      required this.sectionController});
+      required this.lastnameController});
 
   final Function handleFormSwitch;
   final Function handleSignupStep;
@@ -19,14 +18,13 @@ class TeacherSignupFormStep2 extends StatefulWidget {
 
   final TextEditingController firstnameController;
   final TextEditingController lastnameController;
-  final TextEditingController sectionController;
 
   @override
-  _TeacherSignupFormStep2State createState() => _TeacherSignupFormStep2State();
+  TeacherSignupFormStep2State createState() => TeacherSignupFormStep2State();
 }
 
-class _TeacherSignupFormStep2State extends State<TeacherSignupFormStep2> {
-  final TextEditingController _passwordController = TextEditingController();
+class TeacherSignupFormStep2State extends State<TeacherSignupFormStep2> {
+  final TextEditingController passwordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
 
   @override
@@ -83,18 +81,6 @@ class _TeacherSignupFormStep2State extends State<TeacherSignupFormStep2> {
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Please enter your last name';
-              }
-              return null;
-            },
-          ),
-          const SizedBox(height: 20),
-          CustomInput(
-            controller: widget.sectionController,
-            hintText: "e.g. 1CSA",
-            labelText: "Section",
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter your section';
               }
               return null;
             },

@@ -13,10 +13,10 @@ class CustomTimerInput extends StatefulWidget {
   final TextEditingController secondsController;
 
   @override
-  _CustomTimerInputState createState() => _CustomTimerInputState();
+  CustomTimerInputState createState() => CustomTimerInputState();
 }
 
-class _CustomTimerInputState extends State<CustomTimerInput> {
+class CustomTimerInputState extends State<CustomTimerInput> {
   bool isChecked = false;
 
   @override

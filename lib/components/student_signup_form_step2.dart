@@ -27,7 +27,7 @@ class StudentSignupFormStep2 extends StatefulWidget {
 }
 
 class StudentSignupFormStep2State extends State<StudentSignupFormStep2> {
-  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
 
   @override

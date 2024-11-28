@@ -35,6 +35,7 @@ class CustomButton extends StatelessWidget {
       "danger": Colors.black
     };
 
+    // ignore: no_leading_underscores_for_local_identifiers
     Map<String, dynamic> _size = {"sm": 12, "normal": 14, "md": 18};
 
     dynamic buttonColor = buttonType[type];
@@ -46,7 +47,7 @@ class CustomButton extends StatelessWidget {
     final bool hasEndIcon = endIcon != null;
 
     return Tooltip(
-      message: toolTip ?? label ?? "",
+      message: toolTip ?? label,
       child: ElevatedButton(
           style: ElevatedButton.styleFrom(
               elevation: 5,

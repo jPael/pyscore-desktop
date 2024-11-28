@@ -4,6 +4,7 @@ import 'package:pyscore/components/custom_button.dart';
 import 'package:pyscore/services/python_runner.dart';
 
 class CodeRunnerButton extends StatelessWidget {
+  // ignore: prefer_const_constructors_in_immutables
   CodeRunnerButton({super.key, required this.codeController});
 
   final CodeController codeController;

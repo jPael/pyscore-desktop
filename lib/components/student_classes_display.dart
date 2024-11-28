@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:pyscore/components/class_card.dart';
 import 'package:pyscore/mockData/classes.dart';
 import 'package:pyscore/models/classroom.dart';
 import 'package:pyscore/models/posts.dart';
-import 'package:pyscore/teacher/pages/handled_classes.dart';
 
 class StudentClassesDisplay extends StatefulWidget {
-  StudentClassesDisplay({super.key, required this.handleOpenClass});
+  const StudentClassesDisplay({super.key, required this.handleOpenClass});
 
   final Function handleOpenClass;
 
@@ -30,7 +28,7 @@ class _StudentClassesDisplayState extends State<StudentClassesDisplay> {
             color: Theme.of(context).colorScheme.surface,
             child: Wrap(
               children: classes.asMap().entries.map((c) {
-                final i = c.key;
+                // final i = c.key;
 
                 final Map<String, dynamic> room = c.value;
 

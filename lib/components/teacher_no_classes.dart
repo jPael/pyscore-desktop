@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pyscore/components/create_class_button.dart';
 
 class TeacherNoClasses extends StatefulWidget {
-  TeacherNoClasses({super.key});
+  const TeacherNoClasses({super.key});
 
   @override
   State<TeacherNoClasses> createState() => _TeacherNoClassesState();

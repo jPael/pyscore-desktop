@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:pyscore/components/signin_form.dart';
 import 'package:pyscore/components/teacher_signin_form.dart';
 import 'package:pyscore/components/teacher_signup_form.dart';
 
-import '../components/loginCarousel.dart';
+import '../components/login_carousel.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

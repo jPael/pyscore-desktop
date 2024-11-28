@@ -25,7 +25,7 @@ class CodeRunnerConsole extends StatelessWidget {
             color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
           ),
           ConstrainedBox(
-            constraints: BoxConstraints(minHeight: 200, maxHeight: 200),
+            constraints: const BoxConstraints(minHeight: 200, maxHeight: 200),
             child: ListView(
               children: [
                 logText(context),

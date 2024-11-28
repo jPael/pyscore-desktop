@@ -14,10 +14,10 @@ class FilePickerButton extends StatefulWidget {
   final Function handleFilePick;
 
   @override
-  _FilePickerButtonState createState() => _FilePickerButtonState();
+  FilePickerButtonState createState() => FilePickerButtonState();
 }
 
-class _FilePickerButtonState extends State<FilePickerButton> {
+class FilePickerButtonState extends State<FilePickerButton> {
   Future<String?> getDesktopDirectory() async {
     if (Platform.isWindows) {
       final Directory appDocumentsDir =

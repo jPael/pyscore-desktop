@@ -2,7 +2,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:pyscore/components/custom_button.dart';
 import 'package:pyscore/components/custom_input.dart';
+import 'package:pyscore/constants/auth_errors.dart';
 import 'package:pyscore/pages/teacher_home_page.dart';
+import 'package:pyscore/services/auth.dart';
+import 'package:pyscore/utils/auth_results.dart';
 
 class TeacherSigninForm extends StatefulWidget {
   const TeacherSigninForm({super.key, required this.handleFormSwitch});
@@ -18,6 +21,38 @@ class TeacherSigninFormState extends State<TeacherSigninForm> {
 
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+
+  String? error;
+
+  void handleSignin(BuildContext context) async {
+    if (!formKey.currentState!.validate()) {
+      return;
+    }
+
+    final Auth auth = Auth(
+        username: usernameController.text, password: passwordController.text);
+
+    final AuthResults res = await auth.signIn();
+
+    if (!res.isSuccess) {
+      setState(() {
+        error = Autherrors.error(res.error!);
+      });
+
+      return;
+    }
+
+    if (!context.mounted) {
+      return;
+    }
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => TeacherHomePage(user: res.user),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +78,25 @@ class TeacherSigninFormState extends State<TeacherSigninForm> {
             ],
           ),
           const SizedBox(height: 40),
+          if (error != null)
+            Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                        color: Colors.redAccent.withOpacity(0.3),
+                        borderRadius: BorderRadius.circular(4)),
+                    child: Text(
+                      error ?? "",
+                      softWrap: true,
+                      style: TextStyle(color: Colors.red[900]),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          const SizedBox(height: 10),
           CustomInput(
             controller: usernameController,
             hintText: "",
@@ -75,15 +129,7 @@ class TeacherSigninFormState extends State<TeacherSigninForm> {
                 label: 'Sign in',
                 endIcon: Icons.arrow_right_alt,
                 onTap: () {
-                  if (formKey.currentState!.validate()) {
-                    // Perform login action
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const TeacherHomePage(),
-                      ),
-                    );
-                  }
+                  handleSignin(context);
                 },
               ),
             ],

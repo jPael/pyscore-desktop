@@ -28,11 +28,11 @@ class _SignupFormState extends State<SignupForm> {
   final TextEditingController sectionController = TextEditingController();
 
   void handleSignUp() async {
-    print(schoolIdController.text);
-    print(passwordController.text);
-    print(firstnameController.text);
-    print(lastnameController.text);
-    print(sectionController.text);
+    // print(schoolIdController.text);
+    // print(passwordController.text);
+    // print(firstnameController.text);
+    // print(lastnameController.text);
+    // print(sectionController.text);
 
     widget.handleFormSwitch(false);
   }

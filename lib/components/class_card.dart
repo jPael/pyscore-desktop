@@ -9,10 +9,10 @@ class ClassCard extends StatefulWidget {
   final Function handleOpenClass;
 
   @override
-  _ClassCardState createState() => _ClassCardState();
+  ClassCardState createState() => ClassCardState();
 }
 
-class _ClassCardState extends State<ClassCard> {
+class ClassCardState extends State<ClassCard> {
   bool isHovered = false;
 
   @override
@@ -60,7 +60,7 @@ class _ClassCardState extends State<ClassCard> {
                         children: [
                           Expanded(
                             child: Text(
-                              "${name}",
+                              name,
                               softWrap: true,
                               style: const TextStyle(
                                   fontSize: 24, fontWeight: FontWeight.w600),
