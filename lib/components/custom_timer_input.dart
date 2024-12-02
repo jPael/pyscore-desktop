@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pyscore/components/custom_input.dart';
 
 class CustomTimerInput extends StatefulWidget {
@@ -39,10 +40,14 @@ class CustomTimerInputState extends State<CustomTimerInput> {
         SizedBox(
           width: 100,
           child: CustomInput(
-              enabled: isChecked,
-              controller: widget.hoursController,
-              hintText: "00",
-              labelText: "Hour"),
+            enabled: isChecked,
+            controller: widget.hoursController,
+            hintText: "00",
+            labelText: "Hour",
+            formatters: [FilteringTextInputFormatter.digitsOnly],
+            length: 2,
+            inputType: InputType.number,
+          ),
         ),
         const SizedBox(
           width: 12,
@@ -53,7 +58,10 @@ class CustomTimerInputState extends State<CustomTimerInput> {
               enabled: isChecked,
               controller: widget.minutesController,
               hintText: "00",
-              labelText: "Minute"),
+              labelText: "Minute",
+              formatters: [FilteringTextInputFormatter.digitsOnly],
+              length: 2,
+              inputType: InputType.number),
         ),
         const SizedBox(
           width: 12,
@@ -64,7 +72,10 @@ class CustomTimerInputState extends State<CustomTimerInput> {
               enabled: isChecked,
               controller: widget.secondsController,
               hintText: "00",
-              labelText: "Second"),
+              labelText: "Second",
+              formatters: [FilteringTextInputFormatter.digitsOnly],
+              length: 2,
+              inputType: InputType.number),
         )
       ],
     );

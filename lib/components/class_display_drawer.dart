@@ -18,7 +18,7 @@ class _ClassDisplayDrawerState extends State<ClassDisplayDrawer> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Posts> posts = widget.selectedClass!.posts;
+    final List<Post> posts = widget.selectedClass!.posts!;
 
     // print("is there a posts ${posts.isEmpty}");
 
@@ -45,7 +45,8 @@ class _ClassDisplayDrawerState extends State<ClassDisplayDrawer> {
                             style: const TextStyle(
                                 fontSize: 26, fontWeight: FontWeight.bold),
                           ),
-                          Text(widget.selectedClass!.owner),
+                          Text(
+                              "${widget.selectedClass!.owner.firstname} ${widget.selectedClass!.owner.lastname}"),
                         ],
                       ),
                     ),
@@ -85,11 +86,11 @@ class _ClassDisplayDrawerState extends State<ClassDisplayDrawer> {
                                 physics: const AlwaysScrollableScrollPhysics(),
                                 itemCount: posts.length,
                                 itemBuilder: (context, index) {
-                                  final Posts currentPost = posts[index];
+                                  final Post currentPost = posts[index];
 
                                   final String title = currentPost.title;
                                   final String instructions =
-                                      currentPost.instructions;
+                                      currentPost.instruction;
                                   // final String points = currentPost.points;
                                   // final String due = DateFormat(
                                   //         'hh:mm a MMMM dd, yyyy')

@@ -14,7 +14,7 @@ class TeacherClassesDisplay extends StatelessWidget {
           context,
           MaterialPageRoute(
               builder: (context) =>
-                  TeacherClassroomPage(classroomId: classroom.id)));
+                  TeacherClassroomPage(classroom: classroom)));
 
   @override
   Widget build(BuildContext context) {

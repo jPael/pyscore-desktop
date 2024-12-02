@@ -8,11 +8,14 @@ import 'package:pyscore/components/custom_timer_input.dart';
 import 'package:pyscore/models/classroom.dart';
 import 'package:pyscore/models/my_classrooms.dart';
 import 'package:pyscore/models/posts.dart';
+import 'package:pyscore/utils/results.dart';
 
 class TeacherCreatePost extends StatefulWidget {
-  const TeacherCreatePost({super.key, required this.classroom});
+  const TeacherCreatePost(
+      {super.key, required this.classroom, required this.initializePosts});
 
   final Classroom classroom;
+  final Function initializePosts;
 
   @override
   TeacherCreatePostState createState() => TeacherCreatePostState();
@@ -29,6 +32,7 @@ class TeacherCreatePostState extends State<TeacherCreatePost> {
   final TextEditingController dueController = TextEditingController();
 
   // Timer
+
   final TextEditingController hoursController = TextEditingController();
   final TextEditingController minutesController = TextEditingController();
   final TextEditingController secondsController = TextEditingController();
@@ -39,29 +43,56 @@ class TeacherCreatePostState extends State<TeacherCreatePost> {
     });
   }
 
-  void handlePost() {
-    const String id = "someID";
+  int getTimerDuration() {
+    final int hours =
+        int.parse(hoursController.text.isEmpty ? "0" : hoursController.text);
+    final int minutes = int.parse(
+        minutesController.text.isEmpty ? "0" : minutesController.text);
+    final int seconds = int.parse(
+        secondsController.text.isEmpty ? "0" : secondsController.text);
+
+    return (hours * 60 * 60) + (minutes * 60) + seconds;
+  }
+
+  void handlePost() async {
+    final int duration = getTimerDuration();
+    final int points =
+        int.parse(pointsController.text.isEmpty ? "0" : pointsController.text);
+
     final String title = titleController.text;
     final String instructions = instructionsController.text;
-    final String points = pointsController.text;
     final String due = dueDate.toString();
 
-    Posts p = Posts(
-        id: id,
+    Post p = Post(
+        classroomId: widget.classroom.id,
         title: title,
-        instructions: instructions,
-        points: int.parse(points),
+        instruction: instructions,
+        points: points,
+        duration: duration,
         due: due);
-    context.read<MyClassrooms>().createPost(widget.classroom, p);
 
-    Navigator.pop(context);
+    PostResults result = await p.insertToDb();
+
+    if (result.isSuccess && mounted) {
+      context.read<MyClassrooms>().createPost(widget.classroom, p);
+      Navigator.pop(context);
+      widget.initializePosts();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Create post"),
+        title: Row(
+          children: [
+            Text("Create post to "),
+            Text(
+              widget.classroom.classroomName,
+              style: TextStyle(fontWeight: FontWeight.w600),
+            ),
+          ],
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
@@ -72,6 +103,7 @@ class TeacherCreatePostState extends State<TeacherCreatePost> {
             child: Form(
               key: _key,
               child: Column(
+                mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
@@ -96,6 +128,7 @@ class TeacherCreatePostState extends State<TeacherCreatePost> {
                     hintText: "",
                     labelText: "Instructions",
                     minLine: 5,
+                    maxLine: 6,
                   ),
                   const SizedBox(
                     height: 12,

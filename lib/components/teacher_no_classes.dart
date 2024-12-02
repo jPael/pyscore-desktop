@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:pyscore/components/create_class_button.dart';
+import 'package:pyscore/models/user.dart';
 
 class TeacherNoClasses extends StatefulWidget {
-  const TeacherNoClasses({super.key});
+  const TeacherNoClasses({super.key, required this.user});
+
+  final User user;
 
   @override
   State<TeacherNoClasses> createState() => _TeacherNoClassesState();
@@ -32,7 +35,9 @@ class _TeacherNoClassesState extends State<TeacherNoClasses> {
               const SizedBox(
                 height: 15,
               ),
-              const CreateClassButton(),
+              CreateClassButton(
+                user: widget.user,
+              ),
             ],
           ),
         ),

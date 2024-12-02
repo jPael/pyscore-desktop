@@ -30,10 +30,10 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
               color: Colors.white), // Set drawer icon color to white
           actions: [
             Padding(
-              padding: EdgeInsets.only(right: 12.0),
+              padding: const EdgeInsets.only(right: 12.0),
               child: Row(
                 children: [
-                  const CreateClassButton(),
+                  CreateClassButton(user: widget.user),
                   const SizedBox(
                     width: 12,
                   ),
@@ -63,7 +63,9 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
                     ? TeacherClassesDisplay(
                         classrooms: classrooms,
                       )
-                    : const TeacherNoClasses(),
+                    : TeacherNoClasses(
+                        user: widget.user,
+                      ),
               ],
             );
           },

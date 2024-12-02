@@ -1,5 +1,5 @@
 import 'package:path/path.dart';
-import 'package:pyscore/models/user.dart';
+import 'package:pyscore/services/db_tables.dart';
 import 'package:sqflite/sqflite.dart';
 
 class Db {
@@ -24,22 +24,25 @@ class Db {
   }
 
   Future _createDb(Database db, int version) async {
-    const String idType = "TEXT PRIMARY KEY";
+    List<Map<String, String>> queries = sqlTables;
 
-    const sql = '''
-          CREATE TABLE $userTableName (
-          id $idType,
-          studentId Text UNIQUE ,
-          username TEXT UNIQUE,
-          password TEXT,
-          firstname TEXT,
-          lastname TEXT,
-          user_type TEXT,
-          createdAt TEXT,
-          updatedAt TEXT
-          )
-''';
+    for (Map<String, String> query in queries) {
+      final bool isTableExists = await _isTableExists(db, query["tablename"]!);
 
-    await db.execute(sql);
+      if (isTableExists) continue;
+      await db.execute(query["query"]!);
+    }
+  }
+
+  Future<bool> _isTableExists(Database db, String tablename) async {
+    const query = '''
+    SELECT name 
+    FROM sqlite_master
+    WHERE type='table' AND name=?
+  ''';
+
+    final result = await db.rawQuery(query, [tablename]);
+
+    return result.isNotEmpty;
   }
 }

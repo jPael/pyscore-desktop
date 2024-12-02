@@ -1,33 +1,56 @@
 import 'package:flutter/material.dart';
 import 'package:pyscore/components/custom_button.dart';
 import 'package:pyscore/components/custom_input.dart';
+import 'package:pyscore/constants/classroom_errors.dart';
 import 'package:pyscore/models/classroom.dart';
 import 'package:pyscore/models/my_classrooms.dart';
 import 'package:provider/provider.dart';
+import 'package:pyscore/models/user.dart';
+import 'package:pyscore/utils/results.dart';
 
 class CreateClassButton extends StatefulWidget {
-  const CreateClassButton({super.key});
+  const CreateClassButton({super.key, required this.user});
+
+  final User user;
 
   @override
   CreateClassButtonState createState() => CreateClassButtonState();
 }
 
 class CreateClassButtonState extends State<CreateClassButton> {
+  bool hasError = false;
+  String? errorMessage;
+
   final TextEditingController classroomNameController = TextEditingController();
 
   final TextEditingController sectionController = TextEditingController();
 
-  void handleCreateClassroom() {
-    final String id = classroomNameController.text;
-    final String cName = classroomNameController.text;
-    final String section = sectionController.text;
-    const String owner = "Daisy Matlih";
+  void handleCreateClassroom() async {
+    final String name = classroomNameController.text;
 
-    Classroom classroom = Classroom(id, cName, section, owner, []);
+    if (name.isEmpty) return;
+
+    Classroom classroom = Classroom(
+      classroomName: name,
+      owner: widget.user,
+    );
 
     Navigator.pop(context);
 
-    context.read<MyClassrooms>().createClassroom(classroom);
+    ClassroomResults res = await classroom.insertToDb(widget.user.id!);
+
+    if (res.isSuccess && mounted) {
+      setState(() {
+        hasError = false;
+        errorMessage = null;
+      });
+      context.read<MyClassrooms>().createClassroom(classroom);
+    } else {
+      setState(() {
+        hasError = true;
+        errorMessage = ClassroomErrors.error(res.code!);
+      });
+    }
   }
 
   Future<void> showCreateClassroomDialog(BuildContext context) {
@@ -64,10 +87,28 @@ class CreateClassButtonState extends State<CreateClassButton> {
                     const SizedBox(
                       height: 12,
                     ),
-                    CustomInput(
-                        controller: sectionController,
-                        hintText: "",
-                        labelText: "Section"),
+                    if (hasError)
+                      Row(
+                        children: [
+                          const Text(
+                            "Error:",
+                            style: TextStyle(
+                                color: Colors.redAccent,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(
+                            width: 6,
+                          ),
+                          Text(
+                            errorMessage ?? "",
+                            style: const TextStyle(color: Colors.redAccent),
+                          ),
+                        ],
+                      ),
+                    // CustomInput(
+                    //     controller: sectionController,
+                    //     hintText: "",
+                    //     labelText: "Section"),
                     const SizedBox(
                       height: 12,
                     ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CustomInput extends StatefulWidget {
   const CustomInput(
@@ -9,8 +10,11 @@ class CustomInput extends StatefulWidget {
       this.isPassword = false,
       this.validator,
       this.minLine,
-      this.maxLine,
-      this.enabled = true});
+      this.maxLine = 1,
+      this.enabled = true,
+      this.inputType = InputType.text,
+      this.formatters,
+      this.length});
 
   final TextEditingController controller;
   final bool isPassword;
@@ -20,6 +24,9 @@ class CustomInput extends StatefulWidget {
   final int? minLine;
   final int? maxLine;
   final bool enabled;
+  final InputType inputType;
+  final List<TextInputFormatter>? formatters;
+  final int? length;
 
   @override
   State<CustomInput> createState() => _CustomInputState();
@@ -34,14 +41,28 @@ class _CustomInputState extends State<CustomInput> {
     });
   }
 
+  TextInputType inputType(InputType type) {
+    switch (type) {
+      case InputType.text:
+        return TextInputType.text;
+      case InputType.number:
+        return TextInputType.number;
+      default:
+        return TextInputType.text;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+        keyboardType: inputType(widget.inputType),
         maxLines: !widget.isPassword ? widget.maxLine : 1,
-        minLines: !widget.isPassword ? widget.minLine : null,
+        minLines: !widget.isPassword ? widget.minLine : 1,
         obscureText: widget.isPassword && !hidePassword,
         enabled: widget.enabled,
         controller: widget.controller,
+        inputFormatters: widget.formatters,
+        maxLength: widget.length,
         decoration: InputDecoration(
             labelText: widget.labelText,
             hintText: widget.hintText,
@@ -60,3 +81,5 @@ class _CustomInputState extends State<CustomInput> {
         icon: Icon(hidePassword ? Icons.visibility_off : Icons.visibility));
   }
 }
+
+enum InputType { text, number }

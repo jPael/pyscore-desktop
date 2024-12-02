@@ -15,7 +15,6 @@ dependencies:
    carousel_slider: ^5.0.0
    smooth_page_indicator: ^1.2.0+3
    provider: ^6.1.2
-   postgres: ^3.4.4
    intl: ^0.20.0
    sqflite: ^2.2.6
    sqflite_common_ffi: ^2.3.4+3
@@ -27,6 +26,8 @@ dependencies:
    highlight: ^0.7.0
    filesystem_picker: ^4.1.0
    crypt: ^4.3.1
+   recase: ^4.1.0
+   random_string_generator: ^2.0.0
    flython:
       git: https://github.com/jPael/flython.git
 

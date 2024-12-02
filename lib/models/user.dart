@@ -29,6 +29,7 @@ class User {
   });
 
   Map<String, dynamic> get getUserInfo => {
+        "id": id!,
         "firstname": firstname,
         "lastname": lastname,
         "studentId": studentId,

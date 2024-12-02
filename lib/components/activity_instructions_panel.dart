@@ -14,7 +14,7 @@ class ActivityInstructionsPanel extends StatefulWidget {
       required this.isDone,
       required this.handleActivityFinish});
 
-  final Posts post;
+  final Post post;
   final bool unlocked;
   final VoidCallback handleUnlock;
   final bool isDone;
@@ -81,7 +81,7 @@ class ActivityInstructionsPanelState extends State<ActivityInstructionsPanel> {
                   const SizedBox(
                     height: 12,
                   ),
-                  Text(widget.post.instructions),
+                  Text(widget.post.instruction),
                 ],
               ),
       ),

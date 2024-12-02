@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:pyscore/components/custom_button.dart';
 import 'package:pyscore/components/custom_input.dart';
 import 'package:pyscore/constants/auth_errors.dart';
+import 'package:pyscore/models/my_classrooms.dart';
 import 'package:pyscore/pages/teacher_home_page.dart';
 import 'package:pyscore/services/auth.dart';
-import 'package:pyscore/utils/auth_results.dart';
+import 'package:pyscore/utils/results.dart';
+import 'package:provider/provider.dart';
 
 class TeacherSigninForm extends StatefulWidget {
   const TeacherSigninForm({super.key, required this.handleFormSwitch});
@@ -45,6 +47,8 @@ class TeacherSigninFormState extends State<TeacherSigninForm> {
     if (!context.mounted) {
       return;
     }
+
+    context.read<MyClassrooms>().setId(res.user.id);
 
     Navigator.push(
       context,

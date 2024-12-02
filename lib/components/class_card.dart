@@ -83,7 +83,7 @@ class ClassCardState extends State<ClassCard> {
                         children: [
                           Expanded(
                               child: Text(
-                            "Owner: $owner",
+                            "Owner: ${owner.firstname} ${owner.lastname} ",
                             softWrap: true,
                             style: TextStyle(
                                 color: Theme.of(context).colorScheme.primary,

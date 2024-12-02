@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:pyscore/utils/utils.dart';
 
 class ActivityTimer extends StatefulWidget {
   const ActivityTimer(
@@ -21,10 +22,6 @@ class ActivityTimerState extends State<ActivityTimer> {
   int durationSeconds = 0;
   int warningStartAtSeconds = 60;
   bool isNearOutOfTime = false;
-
-  String formatTime(int seconds) {
-    return '${(Duration(seconds: seconds))}'.split('.')[0].padLeft(8, '0');
-  }
 
   void startTimer() {
     const second = Duration(seconds: 1);

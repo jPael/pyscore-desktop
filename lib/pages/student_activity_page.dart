@@ -7,7 +7,7 @@ import 'package:pyscore/pages/code_runner_console.dart';
 class StudentActivityPage extends StatefulWidget {
   const StudentActivityPage({super.key, required this.post});
 
-  final Posts post;
+  final Post post;
 
   @override
   State<StudentActivityPage> createState() => _StudentActivityPageState();

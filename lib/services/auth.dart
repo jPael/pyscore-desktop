@@ -2,7 +2,7 @@ import 'package:crypt/crypt.dart';
 import 'package:pyscore/constants/auth_errors.dart';
 import 'package:pyscore/data/user_data.dart';
 import 'package:pyscore/models/user.dart';
-import 'package:pyscore/utils/auth_results.dart';
+import 'package:pyscore/utils/results.dart';
 
 class Auth {
   final String username;
