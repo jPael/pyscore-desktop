@@ -1,9 +1,12 @@
+import 'package:flutter/foundation.dart';
 import 'package:pyscore/constants/classroom_errors.dart';
 import 'package:pyscore/data/user_data.dart';
 import 'package:pyscore/fields/classroom_fields.dart';
+import 'package:pyscore/models/my_classrooms.dart';
 import 'package:pyscore/models/posts.dart';
 import 'package:pyscore/models/user.dart';
 import 'package:pyscore/services/db.dart';
+import 'package:pyscore/services/user_services.dart';
 import 'package:pyscore/utils/results.dart';
 import 'package:random_string_generator/random_string_generator.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
@@ -56,20 +59,32 @@ class Classroom {
         ClassroomFields.updatedAt: updatedAt!,
       };
 
-  static Future<Classroom> fromJson(Map<String, Object?> json) async {
-    final String userId = json[ClassroomFields.ownerId] as String;
+  static Future<Classroom?> fromJson(Map<String, Object?> json) async {
+    final String ownerId = json[ClassroomFields.ownerId] as String;
 
-    final User? owner = await getUserById(userId);
+    final String userId = MyClassrooms().userId!;
 
-    Classroom classroom = Classroom(
-        classroomName: json[ClassroomFields.name] as String,
-        owner: owner!,
-        createdAt: json[ClassroomFields.createdAt] as String,
-        updatedAt: json[ClassroomFields.updatedAt] as String,
-        id: json[ClassroomFields.id] as String,
-        code: json[ClassroomFields.code] as String);
+    final User? owner;
+    // print("userId: $userId  ownerId: $ownerId || ${userId == ownerId}");
+    if (userId == ownerId) {
+      owner = await getUserById(ownerId);
+    } else {
+      owner = await fetchUserById(ownerId);
+      // print("printing the owner: ${owner}");
+    }
 
-    return classroom;
+    if (owner != null) {
+      Classroom classroom = Classroom(
+          classroomName: json[ClassroomFields.name] as String,
+          owner: owner,
+          createdAt: json[ClassroomFields.createdAt] as String,
+          updatedAt: json[ClassroomFields.updatedAt] as String,
+          id: json[ClassroomFields.id] as String,
+          code: json[ClassroomFields.code] as String);
+
+      return classroom;
+    }
+    return null;
   }
 
   Future<ClassroomResults> insertToDb(String ownderId) async {
@@ -81,8 +96,8 @@ class Classroom {
     id = classroomId;
     createdAt = DateTime.now().toString();
     updatedAt = DateTime.now().toString();
-    RandomStringGenerator codeGenerator = RandomStringGenerator(
-        fixedLength: 5, hasAlpha: false, hasDigits: true, hasSymbols: false);
+    RandomStringGenerator codeGenerator =
+        RandomStringGenerator(fixedLength: 5, hasAlpha: false, hasDigits: true, hasSymbols: false);
     code = codeGenerator.generate();
 
     try {
@@ -94,9 +109,10 @@ class Classroom {
         throw Error();
       }
     } catch (e) {
-      print(e);
-      return ClassroomResults(
-          code: ClassroomErrorCode.creationError, success: false);
+      if (kDebugMode) {
+        print(e);
+      }
+      return ClassroomResults(error: ClassroomErrorCode.creationError, success: false);
     }
   }
 }

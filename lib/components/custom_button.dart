@@ -1,3 +1,4 @@
+import 'package:pyscore/constants/custom_button_type.dart';
 import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {
@@ -7,36 +8,47 @@ class CustomButton extends StatelessWidget {
       required this.onTap,
       this.startIcon,
       this.endIcon,
-      this.type = "primary",
-      this.size = "normal",
+      this.type = CustomButtonType.primary,
+      this.size = CustomButtonSize.normal,
       this.startWidget,
-      this.toolTip});
+      this.toolTip,
+      this.isLoading = false,
+      this.padding,
+      this.isDisabled = false});
 
   final String label;
   final VoidCallback onTap;
   final IconData? startIcon;
   final IconData? endIcon;
-  final String? type;
-  final String? size;
+  final CustomButtonType? type;
+  final CustomButtonSize? size;
   final Widget? startWidget;
   final String? toolTip;
+  final bool? isLoading;
+  final EdgeInsetsGeometry? padding;
+  final bool? isDisabled;
 
   @override
   Widget build(BuildContext context) {
-    Map<String, dynamic> buttonType = {
-      "ghost": Colors.white,
-      "primary": Theme.of(context).colorScheme.secondary,
-      "danger": Colors.red
+    Map<CustomButtonType, dynamic> buttonType = {
+      CustomButtonType.ghost: Colors.white,
+      CustomButtonType.primary: Theme.of(context).colorScheme.secondary,
+      CustomButtonType.danger: Colors.red[800]
     };
 
-    Map<String, dynamic> textColorType = {
-      "ghost": Colors.black.withOpacity(0.6),
-      "primary": Theme.of(context).colorScheme.inversePrimary,
-      "danger": Colors.black
+    Map<CustomButtonType, dynamic> textColorType = {
+      CustomButtonType.ghost: Colors.black.withValues(alpha: 0.6),
+      CustomButtonType.primary: Theme.of(context).colorScheme.inversePrimary,
+      CustomButtonType.danger: Colors.white
     };
 
     // ignore: no_leading_underscores_for_local_identifiers
-    Map<String, dynamic> _size = {"sm": 12, "normal": 14, "md": 18};
+    Map<CustomButtonSize, dynamic> _size = {
+      CustomButtonSize.sm: 12,
+      CustomButtonSize.normal: 14,
+      CustomButtonSize.md: 18,
+      CustomButtonSize.lg: 24
+    };
 
     dynamic buttonColor = buttonType[type];
     dynamic textColor = textColorType[type];
@@ -51,22 +63,35 @@ class CustomButton extends StatelessWidget {
       child: ElevatedButton(
           style: ElevatedButton.styleFrom(
               elevation: 5,
-              padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+              padding: padding ??
+                  const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
               backgroundColor: buttonColor,
               shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(8)))),
-          onPressed: onTap,
+          onPressed: isDisabled! || isLoading == null || isLoading == true
+              ? null
+              : onTap,
           child: Row(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              if (hasStartWidget) ...[
+              if (isLoading!) ...[
+                SizedBox(
+                  height: s,
+                  width: s,
+                  child: CircularProgressIndicator(
+                    color: textColorType[CustomButtonType.danger],
+                  ),
+                ),
+                const SizedBox(
+                  width: 12,
+                ),
+              ] else if (hasStartWidget && !isLoading!) ...[
                 startWidget!,
                 const SizedBox(
                   width: 12,
                 ),
-              ],
-              if (hasStartIcon) ...[
+              ] else if (hasStartIcon && !isLoading!) ...[
                 Icon(
                   startIcon,
                   color: textColor,
@@ -76,7 +101,12 @@ class CustomButton extends StatelessWidget {
                   width: 12,
                 ),
               ],
-              Text(label, style: TextStyle(color: textColor, fontSize: s)),
+              Text(
+                label,
+                style: TextStyle(color: textColor, fontSize: s),
+                softWrap: true,
+                overflow: TextOverflow.fade,
+              ),
               if (hasEndIcon) ...[
                 const SizedBox(
                   width: 12,

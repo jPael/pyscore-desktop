@@ -7,11 +7,12 @@ class UnfinishedChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return Chip(
       // labelPadding: const EdgeInsets.symmetric(vertical: 1, horizontal: 3),
-      label: const Text(
-        "Unfinished",
-        style: TextStyle(fontSize: 12),
+
+      label: const Icon(
+        Icons.pending,
+        color: Colors.white,
       ),
-      backgroundColor: Colors.redAccent.withOpacity(0.2),
+      backgroundColor: Colors.red[400],
       side: const BorderSide(color: Colors.red),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:pyscore/constants/auth_errors.dart';
 import 'package:pyscore/constants/classroom_errors.dart';
+import 'package:pyscore/constants/host_connect_errors.dart';
 import 'package:pyscore/constants/post_errors.dart';
 import 'package:pyscore/models/user.dart';
 
@@ -10,17 +11,17 @@ class AuthResults {
 
   AuthResults({this.success, this.error, this.userData});
 
-  bool get isSuccess => success != null;
+  bool get isSuccess => success != null && success == true;
   User get user => userData!;
 }
 
 class ClassroomResults {
   final bool? success;
-  final ClassroomErrorCode? code;
+  final ClassroomErrorCode? error;
 
-  ClassroomResults({this.success, this.code});
+  ClassroomResults({this.success, this.error});
 
-  bool get isSuccess => success != null;
+  bool get isSuccess => success != null && success == true;
 }
 
 class PostResults {
@@ -29,5 +30,14 @@ class PostResults {
 
   PostResults({this.success, this.code});
 
-  bool get isSuccess => success != null;
+  bool get isSuccess => success != null && success == true;
+}
+
+class HostConnectResult {
+  final bool? success;
+  final HostConnectErrorCodes? error;
+
+  HostConnectResult({this.success, this.error});
+
+  bool get isSuccess => success != null && success == true;
 }

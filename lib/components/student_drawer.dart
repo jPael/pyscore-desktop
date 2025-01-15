@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:pyscore/components/student_signin_form.dart';
 import 'package:pyscore/pages/landing_page.dart';
+import 'package:pyscore/pages/student_login_page.dart';
 
 class StudentDrawer extends StatelessWidget {
   const StudentDrawer({super.key});
@@ -18,38 +20,20 @@ class StudentDrawer extends StatelessWidget {
             ),
           ),
           const Divider(),
-          // ListTile(
-          //   leading: const Icon(Icons.school),
-          //   title: const Text('Enrolled Classes'),
-          //   onTap: () {
-          //     Navigator.pop(context);
-
-          //     Navigator.of(context).push(MaterialPageRoute(
-          //       builder: (context) => const Enrolledclasses(),
-          //     ));
-          //   },
-          // ),
-          // ListTile(
-          //   leading: const Icon(Icons.archive),
-          //   title: const Text('Archiveds Classes'),
-          //   onTap: () {
-          //     Navigator.pop(context);
-
-          //     Navigator.of(context).push(MaterialPageRoute(
-          //       builder: (context) => const Archivedclasses(),
-          //     ));
-          //   },
-          // ),
           const Spacer(),
           ListTile(
             leading: const Icon(Icons.logout),
             title: const Text('Log out'),
             onTap: () {
-              Navigator.pop(context);
+              // Navigator.pop(context);
 
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => const LandingScreen(),
-              ));
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const StudentLoginPage()));
+              // Navigator.of(context).push(MaterialPageRoute(
+              //   builder: (context) => const LandingScreen(),
+              // ));
             },
           ),
         ],

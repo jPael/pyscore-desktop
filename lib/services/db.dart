@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:path/path.dart';
 import 'package:pyscore/services/db_tables.dart';
 import 'package:sqflite/sqflite.dart';
@@ -20,6 +22,8 @@ class Db {
     String databasePath = await getDatabasesPath();
     String path = join(databasePath, databaseFilename);
 
+    print("db path: " + path);
+
     return await openDatabase(path, version: 1, onCreate: _createDb);
   }
 
@@ -32,6 +36,20 @@ class Db {
       if (isTableExists) continue;
       await db.execute(query["query"]!);
     }
+  }
+
+  Future<void> replaceDb(String? fileDirectory) async {
+    if (fileDirectory == null) return;
+
+    String databasePath = await getDatabasesPath();
+    String path = join(databasePath, databaseFilename);
+
+    File newFile = File(fileDirectory);
+
+    await newFile.copy(path);
+    _database = await openDatabase(path);
+
+    print("Db replaced successfully");
   }
 
   Future<bool> _isTableExists(Database db, String tablename) async {

@@ -7,6 +7,7 @@ class CodeRunnerConsole extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 250,
       padding: const EdgeInsets.all(6),
       margin: const EdgeInsets.only(top: 3, bottom: 6, left: 6, right: 2),
       decoration: const BoxDecoration(

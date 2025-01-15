@@ -1,61 +1,64 @@
-import 'dart:io';
-
-import 'package:filesystem_picker/filesystem_picker.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:flutter/services.dart';
 import 'package:pyscore/components/custom_button.dart';
+import 'package:pyscore/constants/custom_button_type.dart';
 
 class FilePickerButton extends StatefulWidget {
   const FilePickerButton({
     super.key,
     required this.handleFilePick,
+    this.allowedExtensions,
   });
 
   final Function handleFilePick;
+  final List<String>? allowedExtensions;
 
   @override
   FilePickerButtonState createState() => FilePickerButtonState();
 }
 
 class FilePickerButtonState extends State<FilePickerButton> {
-  Future<String?> getDesktopDirectory() async {
-    if (Platform.isWindows) {
-      final Directory appDocumentsDir =
-          await getApplicationDocumentsDirectory();
-      final String desktopPath = '${appDocumentsDir.parent.path}\\Desktop';
-      return desktopPath;
-    }
-    return null; // Return null if not Windows or path unavailable
-  }
-
   void filePick(BuildContext context) async {
-    final String? appDocumentsDir = await getDesktopDirectory();
+    try {
+      List<PlatformFile>? files = (await FilePicker.platform.pickFiles(
+        compressionQuality: 30,
+        type: widget.allowedExtensions == null ? FileType.any : FileType.custom,
+        allowMultiple: false,
+        onFileLoading: (FilePickerStatus status) {
+          if (kDebugMode) {
+            print(status);
+          }
+        },
+        dialogTitle: "Select a file",
+        allowedExtensions: widget.allowedExtensions,
+        lockParentWindow: true,
+      ))
+          ?.files;
 
-    final Directory rootPath = Directory(appDocumentsDir!);
-
-    String? path;
-
-    if (context.mounted) {
-      path = await FilesystemPicker.open(
-        title: 'Open file',
-        context: context,
-        rootDirectory: rootPath,
-        fsType: FilesystemType.file,
-        allowedExtensions: ['.py'],
-        fileTileSelectMode: FileTileSelectMode.wholeTile,
-      );
-
-      widget.handleFilePick(path);
+      if (files != null) {
+        widget.handleFilePick(files[0].path!);
+      }
+    } on PlatformException catch (e) {
+      if (kDebugMode) {
+        print("Unsupported operation: $e");
+      }
+    } catch (e, stackTrace) {
+      if (kDebugMode) {
+        print("Error: $e");
+        print(stackTrace);
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return CustomButton(
-      size: "sm",
+      size: CustomButtonSize.sm,
       label: "Pick a file",
       onTap: () => filePick(context),
-      type: "ghost",
+      type: CustomButtonType.ghost,
       startIcon: Icons.file_open_outlined,
     );
   }

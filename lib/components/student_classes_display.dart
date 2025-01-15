@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:pyscore/components/class_card.dart';
-import 'package:pyscore/fields/classroom_fields.dart';
-import 'package:pyscore/fields/post_fields.dart';
 import 'package:pyscore/mockData/classes.dart';
 import 'package:pyscore/models/classroom.dart';
-import 'package:pyscore/models/posts.dart';
-import 'package:pyscore/models/user.dart';
 
 class StudentClassesDisplay extends StatefulWidget {
-  const StudentClassesDisplay({super.key, required this.handleOpenClass});
+  const StudentClassesDisplay(
+      {super.key, required this.handleOpenClass, required this.classrooms});
 
   final Function handleOpenClass;
+  final List<Classroom> classrooms;
 
   @override
   State<StudentClassesDisplay> createState() => _StudentClassesDisplayState();
@@ -29,7 +27,14 @@ class _StudentClassesDisplayState extends State<StudentClassesDisplay> {
         child: Container(
             padding: const EdgeInsets.symmetric(vertical: 10),
             color: Theme.of(context).colorScheme.surface,
-            child: Text("ass")
+            child: Wrap(
+              children: widget.classrooms.map((classroom) {
+                return ClassCard(
+                    classroom: classroom,
+                    handleOpenClass: widget.handleOpenClass);
+              }).toList(),
+            )
+
             // Wrap(
             //   children: classes.asMap().entries.map((c) {
             //     // final i = c.key;

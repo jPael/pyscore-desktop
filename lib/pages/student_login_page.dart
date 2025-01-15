@@ -3,14 +3,14 @@ import 'package:pyscore/components/login_carousel.dart';
 import 'package:pyscore/components/student_signin_form.dart';
 import 'package:pyscore/components/student_signup_form.dart';
 
-class StudentLoginScreen extends StatefulWidget {
-  const StudentLoginScreen({super.key});
+class StudentLoginPage extends StatefulWidget {
+  const StudentLoginPage({super.key});
 
   @override
-  StudentLoginScreenState createState() => StudentLoginScreenState();
+  StudentLoginPageState createState() => StudentLoginPageState();
 }
 
-class StudentLoginScreenState extends State<StudentLoginScreen> {
+class StudentLoginPageState extends State<StudentLoginPage> {
   bool _isSignUp = false; // Track whether to show the sign-up form
   bool _isSignUpStep2 =
       false; // Track whether to show the second step of sign-up form

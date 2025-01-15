@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pyscore/components/custom_button.dart';
 import 'package:pyscore/components/custom_input.dart';
 import 'package:pyscore/constants/classroom_errors.dart';
+import 'package:pyscore/constants/custom_button_type.dart';
 import 'package:pyscore/models/classroom.dart';
 import 'package:pyscore/models/my_classrooms.dart';
 import 'package:provider/provider.dart';
@@ -9,7 +10,10 @@ import 'package:pyscore/models/user.dart';
 import 'package:pyscore/utils/results.dart';
 
 class CreateClassButton extends StatefulWidget {
-  const CreateClassButton({super.key, required this.user});
+  const CreateClassButton({
+    super.key,
+    required this.user,
+  });
 
   final User user;
 
@@ -48,7 +52,7 @@ class CreateClassButtonState extends State<CreateClassButton> {
     } else {
       setState(() {
         hasError = true;
-        errorMessage = ClassroomErrors.error(res.code!);
+        errorMessage = ClassroomErrors.error(res.error!);
       });
     }
   }
@@ -121,7 +125,7 @@ class CreateClassButtonState extends State<CreateClassButton> {
                         CustomButton(
                           label: "Cancel",
                           onTap: () => Navigator.pop(context),
-                          type: "ghost",
+                          type: CustomButtonType.ghost,
                         ),
                         const SizedBox(
                           width: 12,
@@ -129,7 +133,6 @@ class CreateClassButtonState extends State<CreateClassButton> {
                         CustomButton(
                           label: "Create",
                           onTap: () => handleCreateClassroom(),
-                          type: "primary",
                         ),
                       ],
                     )

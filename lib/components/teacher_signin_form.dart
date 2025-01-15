@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:pyscore/components/custom_button.dart';
 import 'package:pyscore/components/custom_input.dart';
 import 'package:pyscore/constants/auth_errors.dart';
+import 'package:pyscore/constants/user_type.dart';
 import 'package:pyscore/models/my_classrooms.dart';
 import 'package:pyscore/pages/teacher_home_page.dart';
-import 'package:pyscore/services/auth.dart';
+import 'package:pyscore/services/auth.dart' as auth;
+import 'package:pyscore/services/server/create_server.dart';
 import 'package:pyscore/utils/results.dart';
 import 'package:provider/provider.dart';
 
@@ -27,14 +29,14 @@ class TeacherSigninFormState extends State<TeacherSigninForm> {
   String? error;
 
   void handleSignin(BuildContext context) async {
+    final String username = usernameController.text;
+    final String password = passwordController.text;
+
     if (!formKey.currentState!.validate()) {
       return;
     }
-
-    final Auth auth = Auth(
-        username: usernameController.text, password: passwordController.text);
-
-    final AuthResults res = await auth.signIn();
+    final AuthResults res =
+        await auth.signIn(username, password, UserType.teacher);
 
     if (!res.isSuccess) {
       setState(() {
@@ -48,7 +50,7 @@ class TeacherSigninFormState extends State<TeacherSigninForm> {
       return;
     }
 
-    context.read<MyClassrooms>().setId(res.user.id);
+    context.read<MyClassrooms>().initUser(res.user.id!, res.user.userType);
 
     Navigator.push(
       context,

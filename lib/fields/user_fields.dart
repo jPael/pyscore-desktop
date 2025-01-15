@@ -5,6 +5,7 @@ class UserFields {
     lastname,
     studentId,
     password,
+    section,
     userType,
     username,
     createdAt,
@@ -14,6 +15,7 @@ class UserFields {
   static const String id = "id";
   static const String firstname = "firstname";
   static const String lastname = "lastname";
+  static const String section = "section";
   static const String studentId = "studentId";
   static const String password = "password";
   static const String userType = "user_type";

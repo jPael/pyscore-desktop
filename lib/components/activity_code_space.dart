@@ -7,6 +7,7 @@ import 'package:pyscore/components/code_runner_button.dart';
 import 'package:pyscore/components/custom_button.dart';
 import 'package:pyscore/components/file_picker_button.dart';
 import 'package:pyscore/components/save_button.dart';
+import 'package:pyscore/constants/custom_button_type.dart';
 import 'package:pyscore/models/file_opener.dart';
 
 class ActivityCodeSpace extends StatefulWidget {
@@ -151,7 +152,10 @@ class ActivityCodeSpaceState extends State<ActivityCodeSpace> {
                       const SizedBox(
                         width: 6,
                       ),
-                      FilePickerButton(handleFilePick: handleFilePick),
+                      FilePickerButton(
+                        handleFilePick: handleFilePick,
+                        allowedExtensions: const ["py"],
+                      ),
                       const SizedBox(
                         width: 6,
                       ),
@@ -160,7 +164,7 @@ class ActivityCodeSpaceState extends State<ActivityCodeSpace> {
                         width: 6,
                       ),
                       CustomButton(
-                        size: "sm",
+                        size: CustomButtonSize.sm,
                         label: "Submit",
                         onTap: () {},
                         startIcon: Icons.check,
@@ -181,9 +185,10 @@ class ActivityCodeSpaceState extends State<ActivityCodeSpace> {
                         child: CodeField(
                             onChanged: (v) => changesMade(v),
                             gutterStyle: const GutterStyle(
-                              width: 80,
+                              width: 60,
                               textStyle: TextStyle(height: 1.5),
                               showLineNumbers: true,
+                              margin: 1.0,
                             ),
                             minLines: 25,
                             controller: controller)),

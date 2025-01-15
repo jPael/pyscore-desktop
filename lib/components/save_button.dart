@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pyscore/components/custom_button.dart';
 import 'package:pyscore/components/progress_unsaved_indicator.dart';
+import 'package:pyscore/constants/custom_button_type.dart';
 
 class SaveButton extends StatelessWidget {
   const SaveButton(
@@ -21,7 +22,7 @@ class SaveButton extends StatelessWidget {
       startWidget: ProgressUnsavedIndicator(hasNotSaved: hasNotSaved),
       label: saveStatusText,
       onTap: handleSave,
-      type: "ghost",
+      type: CustomButtonType.ghost,
     );
   }
 }

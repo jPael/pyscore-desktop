@@ -4,17 +4,20 @@ import 'package:pyscore/models/classroom.dart';
 import 'package:pyscore/pages/teacher_classroom_page.dart';
 
 class TeacherClassesDisplay extends StatelessWidget {
-  const TeacherClassesDisplay({super.key, required this.classrooms});
+  const TeacherClassesDisplay({
+    super.key,
+    required this.classrooms,
+  });
 
   final List<Classroom> classrooms;
 
-  void handleOpenClass(
-          Classroom classroom, BuildContext context) =>
+  void handleOpenClass(Classroom classroom, BuildContext context) =>
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) =>
-                  TeacherClassroomPage(classroom: classroom)));
+              builder: (context) => TeacherClassroomPage(
+                    classroom: classroom,
+                  )));
 
   @override
   Widget build(BuildContext context) {

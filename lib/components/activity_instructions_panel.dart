@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pyscore/components/activity_timer.dart';
 import 'package:pyscore/components/custom_button.dart';
-import 'package:pyscore/components/done_chip.dart';
-import 'package:pyscore/components/unfinished_chip.dart';
 import 'package:pyscore/models/posts.dart';
 
 class ActivityInstructionsPanel extends StatefulWidget {
@@ -30,6 +28,7 @@ class ActivityInstructionsPanelState extends State<ActivityInstructionsPanel> {
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
+        height: MediaQuery.of(context).size.height / 2,
         padding: const EdgeInsets.all(12),
         margin: const EdgeInsets.only(top: 3, bottom: 3, left: 6, right: 3),
         decoration: const BoxDecoration(
@@ -58,30 +57,48 @@ class ActivityInstructionsPanelState extends State<ActivityInstructionsPanel> {
                 ),
               )
             : Column(
+                mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   ActivityTimer(
                     handleActivityFinish: widget.handleActivityFinish,
-                    points: widget.post.points.toString(),
+                    post: widget.post,
                   ),
-                  const SizedBox(
-                    height: 3,
+                  Divider(
+                    color: Colors.black.withOpacity(0.3),
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        widget.post.title,
-                        style: const TextStyle(
-                            fontSize: 24, fontWeight: FontWeight.w500),
+                      Expanded(
+                        child: Text(
+                          widget.post.title.isEmpty
+                              ? "No title"
+                              : widget.post.title,
+                          style: const TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
-                      const Spacer(),
-                      widget.isDone ? const DoneChip() : const UnfinishedChip(),
+                      // Uncomment and adjust based on your requirements
+                      // widget.isDone ? const DoneChip() : const UnfinishedChip(),
                     ],
                   ),
-                  const SizedBox(
-                    height: 12,
+                  // const SizedBox(height: 12),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: Text(
+                          widget.post.instruction,
+                          softWrap: true,
+                          overflow: TextOverflow.visible,
+                        ),
+                      ),
+                    ),
                   ),
-                  Text(widget.post.instruction),
                 ],
               ),
       ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pyscore/components/teacher_signup_form_step1.dart';
 import 'package:pyscore/components/teacher_signup_form_step2.dart';
+import 'package:pyscore/constants/user_type.dart';
 import 'package:pyscore/models/user.dart';
 
 class TeacherSignupForm extends StatefulWidget {
@@ -21,8 +22,7 @@ class TeacherSignupForm extends StatefulWidget {
 class TeacherSignupFormState extends State<TeacherSignupForm> {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController =
-      TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
 
   final TextEditingController firstnameController = TextEditingController();
   final TextEditingController lastnameController = TextEditingController();
@@ -41,7 +41,7 @@ class TeacherSignupFormState extends State<TeacherSignupForm> {
         studentId: username,
         userType: UserType.teacher);
 
-    await user.insertToDb();
+    await user.signUp();
 
     widget.handleFormSwitch(false);
   }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pyscore/components/activity_code_space.dart';
 import 'package:pyscore/components/activity_instructions_panel.dart';
 import 'package:pyscore/models/posts.dart';
-import 'package:pyscore/pages/code_runner_console.dart';
+import 'package:pyscore/components/code_runner_console.dart';
 
 class StudentActivityPage extends StatefulWidget {
   const StudentActivityPage({super.key, required this.post});

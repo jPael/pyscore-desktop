@@ -16,6 +16,7 @@ List<Map<String, String>> sqlTables = [
           ${UserFields.username} TEXT UNIQUE,
           ${UserFields.password} TEXT,
           ${UserFields.firstname} TEXT,
+          ${UserFields.section} TEXT,
           ${UserFields.lastname} TEXT,
           ${UserFields.userType} TEXT,
           ${UserFields.createdAt} TEXT,

@@ -39,6 +39,7 @@ class Post {
 
     Post post = Post(
         id: json[PostFields.id] as String,
+        classroomId: json[PostFields.classId] as String,
         title: json[PostFields.title] as String,
         instruction: json[PostFields.instruction] as String,
         points: int.parse(json[PostFields.points] as String),
@@ -78,9 +79,32 @@ class Post {
     try {
       int insertId = await db.insert(postTableName, toJson());
 
-      if (insertId > 0) {
+      if (insertId == 0) {
         return PostResults(
             success: false, code: PostErrorCode.postCreationError);
+      }
+
+      return PostResults(success: true);
+    } catch (e, stackTrace) {
+      print(e);
+      print(stackTrace);
+
+      return PostResults(success: false, code: PostErrorCode.serverError);
+    }
+  }
+
+  Future<PostResults> updatePost() async {
+    final Database db = await Db.instance.db;
+
+    final String postUpdatedAt = DateTime.now().toString();
+    updatedAt = postUpdatedAt;
+
+    try {
+      int updateId = await db.update(postTableName, toJson(),
+          where: "${PostFields.id} = ?", whereArgs: [id!]);
+
+      if (updateId == 0) {
+        return PostResults(success: false, code: PostErrorCode.postUpdateError);
       }
 
       return PostResults(success: true);

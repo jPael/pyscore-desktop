@@ -1,33 +1,38 @@
-import 'package:crypt/crypt.dart';
+import 'package:flutter/foundation.dart';
 import 'package:pyscore/constants/auth_errors.dart';
-import 'package:pyscore/data/user_data.dart';
-import 'package:pyscore/models/user.dart';
+import 'package:pyscore/constants/user_type.dart';
+import 'package:pyscore/services/auth_helper.dart';
 import 'package:pyscore/utils/results.dart';
 
-class Auth {
-  final String username;
-  final String password;
-
-  Auth({required this.username, required this.password});
-
-  Future<AuthResults> signIn() async {
-    try {
-      final User? user = await getUserByUsername(username);
-
-      if (user == null) {
-        return AuthResults(error: AuthErrorCode.userNotFound);
-      }
-      final c = Crypt(user.password!);
-
-      if (!c.match(password)) {
-        return AuthResults(error: AuthErrorCode.wrongPassword);
-      }
-
-      return AuthResults(success: true, userData: user);
-    } catch (e) {
-      // ignore: avoid_print
-      print(e);
-      return AuthResults(error: AuthErrorCode.serverError);
+Future<AuthResults> signIn(String username, String password, String type) async {
+  try {
+    if (type == UserType.teacher) {
+      return await signinAsTeacher(username, password);
+    } else if (type == UserType.student) {
+      return await signinAsStudent(username, password);
+    } else {
+      return AuthResults(success: false, error: AuthErrorCode.unspecifiedUserType);
     }
+  } catch (e) {
+    // ignore: avoid_print
+    print(e);
+    return AuthResults(success: false, error: AuthErrorCode.serverError);
+  }
+}
+
+Future<AuthResults> signUp(String type, Map<String, Object?> data) async {
+  try {
+    if (type == UserType.teacher) {
+      return await signupAsTeacher(data);
+    } else {
+      // TODO: finish the registration of student of student maligo sa ko
+
+      return await signupAsStudent(data);
+    }
+  } on Exception catch (e) {
+    if (kDebugMode) {
+      print(e);
+    }
+    return AuthResults(success: false, error: AuthErrorCode.serverError);
   }
 }

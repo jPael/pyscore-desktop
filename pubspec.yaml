@@ -15,21 +15,32 @@ dependencies:
    carousel_slider: ^5.0.0
    smooth_page_indicator: ^1.2.0+3
    provider: ^6.1.2
-   intl: ^0.20.0
+   intl: ^0.19.0
    sqflite: ^2.2.6
    sqflite_common_ffi: ^2.3.4+3
+   sqlite3_flutter_libs: ^0.5.28
    path: ^1.8.3
    path_provider: ^2.0.14
    uuid: ^4.5.1
    fluttertoast: ^8.2.8
    flutter_code_editor: ^0.3.2
    highlight: ^0.7.0
-   filesystem_picker: ^4.1.0
+   file_picker: ^8.1.7
    crypt: ^4.3.1
    recase: ^4.1.0
    random_string_generator: ^2.0.0
+   flutter_quill: ^10.8.5
+   flutter_quill_extensions: ^10.8.5
+   pretty_json: ^2.0.0
+   desktop_drop: ^0.5.0
+   cross_file: ^0.3.4+2
+   window_manager: ^0.4.3
    flython:
       git: https://github.com/jPael/flython.git
+   flutter_localizations:
+      sdk: flutter
+   mini_server: ^1.1.0
+   http: ^1.2.2
 
 dev_dependencies:
    flutter_test:

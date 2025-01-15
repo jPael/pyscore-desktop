@@ -2,7 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pyscore/components/custom_button.dart';
 import 'package:pyscore/components/custom_input.dart';
+import 'package:pyscore/constants/auth_errors.dart';
+import 'package:pyscore/constants/user_type.dart';
+import 'package:pyscore/models/my_classrooms.dart';
 import 'package:pyscore/pages/student_home_page.dart';
+import 'package:pyscore/services/auth.dart' as auth;
+import 'package:provider/provider.dart';
+import 'package:pyscore/utils/results.dart';
 
 class StudentSigninForm extends StatefulWidget {
   const StudentSigninForm({super.key, required this.handleFormSwitch});
@@ -18,6 +24,42 @@ class StudentSigninFormState extends State<StudentSigninForm> {
 
   final TextEditingController studentIdController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+
+  String? error;
+
+  @override
+  void dispose() {
+    studentIdController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  void handleSignin(BuildContext context) async {
+    if (!formKey.currentState!.validate()) {
+      return;
+    }
+
+    final String studentId = studentIdController.text;
+    final String password = passwordController.text;
+
+    final AuthResults res = await auth.signIn(studentId, password, UserType.student);
+
+    if (!res.isSuccess) {
+      setState(() {
+        error = Autherrors.error(res.error!);
+      });
+
+      return;
+    }
+
+    if (!context.mounted) {
+      return;
+    }
+    context.read<MyClassrooms>().initUser(res.user.id!, res.user.userType);
+
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => StudentHomePage(user: res.user)));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,12 +79,29 @@ class StudentSigninFormState extends State<StudentSigninForm> {
                 ),
               ),
               const Spacer(),
-              IconButton(
-                  onPressed: () => Navigator.pop(context),
-                  icon: const Icon(Icons.close))
+              IconButton(onPressed: () => Navigator.pop(context), icon: const Icon(Icons.close))
             ],
           ),
           const SizedBox(height: 40),
+          if (error != null)
+            Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                        color: Colors.redAccent.withValues(alpha: 0.3),
+                        borderRadius: BorderRadius.circular(4)),
+                    child: Text(
+                      error ?? "",
+                      softWrap: true,
+                      style: TextStyle(color: Colors.red[900]),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          const SizedBox(height: 10),
           CustomInput(
             controller: studentIdController,
             hintText: "",
@@ -77,12 +136,7 @@ class StudentSigninFormState extends State<StudentSigninForm> {
                 onTap: () {
                   if (formKey.currentState!.validate()) {
                     // Perform login action
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const StudentHomePage(),
-                      ),
-                    );
+                    handleSignin(context);
                   }
                 },
               ),
@@ -93,7 +147,7 @@ class StudentSigninFormState extends State<StudentSigninForm> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "Don't have an account?",
+                "Don't have an account? ",
                 style: GoogleFonts.roboto(
                   fontWeight: FontWeight.w500,
                   letterSpacing: 1,
