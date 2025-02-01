@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:pyscore/components/custom_button.dart';
-import 'package:pyscore/constants/post_errors.dart';
+import 'package:pyscore/constants/errors/post_errors.dart';
 import 'package:pyscore/data/post_data.dart';
-import 'package:pyscore/constants/custom_button_type.dart';
+import 'package:pyscore/constants/types/custom_button_type.dart';
 import 'package:pyscore/models/posts.dart';
 import 'package:pyscore/utils/results.dart';
 
 class TeacherPostDeleteButton extends StatefulWidget {
-  const TeacherPostDeleteButton(
-      {super.key, required this.post, required this.setPostToDirty});
+  const TeacherPostDeleteButton({super.key, required this.post, required this.setPostToDirty});
   final Post post;
   final Function setPostToDirty;
   @override
@@ -38,7 +37,7 @@ class TeacherPostDeleteButtonState extends State<TeacherPostDeleteButton> {
 
       if (!result.success!) {
         hasError = !result.success!;
-        errorMsg = PostErrors.error(result.code!);
+        errorMsg = PostErrors.error(result.error!);
       }
 
       isLoading = false;
@@ -82,8 +81,7 @@ class TeacherPostDeleteButtonState extends State<TeacherPostDeleteButton> {
                                   Text(
                                     "Error: ",
                                     style: TextStyle(
-                                        color: Colors.red[800],
-                                        fontWeight: FontWeight.w600),
+                                        color: Colors.red[800], fontWeight: FontWeight.w600),
                                   ),
                                   Text(
                                     errorMsg!,
@@ -97,8 +95,7 @@ class TeacherPostDeleteButtonState extends State<TeacherPostDeleteButton> {
                           ),
                           Text(
                             widget.post.title,
-                            style: const TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.w600),
+                            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                           ),
                           const SizedBox(
                             height: 12,
@@ -128,9 +125,7 @@ class TeacherPostDeleteButtonState extends State<TeacherPostDeleteButton> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              CustomButton(
-                                  label: "Cancel",
-                                  onTap: () => Navigator.pop(context)),
+                              CustomButton(label: "Cancel", onTap: () => Navigator.pop(context)),
                               const SizedBox(
                                 width: 12,
                               ),
@@ -138,8 +133,7 @@ class TeacherPostDeleteButtonState extends State<TeacherPostDeleteButton> {
                                   type: CustomButtonType.danger,
                                   label: "Delete",
                                   isLoading: isLoading,
-                                  onTap: () async =>
-                                      await handleDelete(context)),
+                                  onTap: () async => await handleDelete(context)),
                             ],
                           )
                         ],

@@ -1,6 +1,8 @@
 import 'package:pyscore/fields/post_fields.dart';
+import 'package:pyscore/fields/submissions_fields.dart';
 import 'package:pyscore/fields/user_classroom_fields.dart';
 import 'package:pyscore/models/classroom.dart';
+import 'package:pyscore/models/submissions.dart';
 import 'package:pyscore/models/user.dart';
 import 'package:pyscore/models/posts.dart';
 import 'package:pyscore/fields/user_fields.dart';
@@ -66,8 +68,30 @@ List<Map<String, String>> sqlTables = [
         ${UserClassroomFields.updatedAt} TEXT,
         PRIMARY KEY (${UserClassroomFields.userId}, ${UserClassroomFields.classroomId}),
         FOREIGN KEY (${UserClassroomFields.userId}) REFERENCES $userTableName(id),
-        FOREIGN KEY (${UserClassroomFields.classroomId}) REFERENCES $classroomTableName(id))
+        FOREIGN KEY (${UserClassroomFields.classroomId}) REFERENCES $classroomTableName(id)
+        )
 
+'''
+  },
+  {
+    "tablename": submissionsTableName,
+    "query": '''
+      CREATE TABLE $submissionsTableName (
+      ${SubmissionsFields.id} TEXT PRIMARY KEY,
+      ${SubmissionsFields.filename} TEXT,
+      ${SubmissionsFields.userId} TEXT,
+      ${SubmissionsFields.postId} TEXT,
+      ${SubmissionsFields.isChecked} BOOLEAN,
+      ${SubmissionsFields.score} INTEGER,
+      ${SubmissionsFields.remarks} TEXT,
+      ${SubmissionsFields.checker} TEXT,
+      ${SubmissionsFields.createdAt} TEXT,
+      ${SubmissionsFields.updatedAt} TEXT,
+
+      UNIQUE(${SubmissionsFields.userId},${SubmissionsFields.postId},${SubmissionsFields.filename}),
+      FOREIGN KEY (${SubmissionsFields.userId}) REFERENCES $userTableName(id),
+      FOREIGN KEY (${SubmissionsFields.postId}) REFERENCES $postTableName(id)
+      )
 '''
   }
 ];

@@ -1,7 +1,9 @@
-import 'package:pyscore/constants/auth_errors.dart';
-import 'package:pyscore/constants/classroom_errors.dart';
-import 'package:pyscore/constants/host_connect_errors.dart';
-import 'package:pyscore/constants/post_errors.dart';
+import 'package:pyscore/constants/errors/auth_errors.dart';
+import 'package:pyscore/constants/errors/classroom_errors.dart';
+import 'package:pyscore/constants/errors/host_connect_errors.dart';
+import 'package:pyscore/constants/errors/post_errors.dart';
+import 'package:pyscore/constants/errors/user_errors.dart';
+import 'package:pyscore/models/posts.dart';
 import 'package:pyscore/models/user.dart';
 
 class AuthResults {
@@ -26,11 +28,13 @@ class ClassroomResults {
 
 class PostResults {
   final bool? success;
-  final PostErrorCode? code;
+  final PostErrorCode? error;
+  final Post? _post;
 
-  PostResults({this.success, this.code});
+  PostResults({this.success, this.error, Post? post}) : _post = post;
 
   bool get isSuccess => success != null && success == true;
+  Post? get post => _post;
 }
 
 class HostConnectResult {
@@ -40,4 +44,16 @@ class HostConnectResult {
   HostConnectResult({this.success, this.error});
 
   bool get isSuccess => success != null && success == true;
+}
+
+class UserResults {
+  final bool? success;
+  final UserErrorCodes? error;
+  final User? _user;
+
+  UserResults({this.success, this.error, User? user}) : _user = user;
+
+  bool get isSuccess => success != null && success == true;
+
+  User? get user => _user;
 }

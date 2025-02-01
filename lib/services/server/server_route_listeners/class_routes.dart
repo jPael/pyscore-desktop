@@ -18,8 +18,6 @@ void classRoutes(MiniServer server) {
 
     final Classroom? classroom = await getClassroomByCode(classroomCode);
 
-    // print("is classroom null? ${classroom == null}, ${classroom!.id!}");
-
     if (classroom == null) {
       req.response.statusCode = HttpStatus.notFound;
     }
@@ -39,7 +37,7 @@ void classRoutes(MiniServer server) {
     final content = await utf8.decoder.bind(req).join();
     final data = jsonDecode(content) as Map<String, dynamic>;
 
-    String id = data["userId"];
+    String id = data[ClassParamsKey.classId];
 
     final List<Classroom?> classes = await getAllClassroomAsStudent(id);
 

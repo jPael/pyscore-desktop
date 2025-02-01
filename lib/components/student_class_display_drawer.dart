@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pyscore/components/student_class_display_drawer_item.dart';
-import 'package:pyscore/data/post_data.dart';
 import 'package:pyscore/models/classroom.dart';
 import 'package:pyscore/models/posts.dart';
+import 'package:pyscore/services/user_services.dart';
 
 class ClassDisplayDrawer extends StatefulWidget {
   const ClassDisplayDrawer({super.key, required this.selectedClass});
@@ -24,9 +24,14 @@ class _ClassDisplayDrawerState extends State<ClassDisplayDrawer> {
       isLoading = true;
     });
 
-    List<Post>? p = await getAllPostsByClassId(widget.selectedClass!.id!);
+    // List<Post>? p = await getAllPostsByClassId(widget.selectedClass!.id!);
+    List<Post>? p = await fetchAllPostByClassId(widget.selectedClass!.id!);
 
     setState(() {
+      if (p == null) {
+        return;
+      }
+
       posts = p;
     });
 
@@ -57,15 +62,22 @@ class _ClassDisplayDrawerState extends State<ClassDisplayDrawer> {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text(
-                            widget.selectedClass!.classroomName,
-                            style: const TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                widget.selectedClass!.classroomName,
+                                style: const TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                  "${widget.selectedClass!.owner.firstname} ${widget.selectedClass!.owner.lastname}"),
+                            ],
                           ),
-                          Text(
-                              "${widget.selectedClass!.owner.firstname} ${widget.selectedClass!.owner.lastname}"),
+                          IconButton(onPressed: fetchPosts, icon: Icon(Icons.refresh))
                         ],
                       ),
                     ),
@@ -82,7 +94,7 @@ class _ClassDisplayDrawerState extends State<ClassDisplayDrawer> {
                         ? const Center(
                             child: CircularProgressIndicator(),
                           )
-                        : posts == null
+                        : posts == null || posts!.isEmpty
                             ? Expanded(
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(vertical: 50.0),

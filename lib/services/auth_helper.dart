@@ -5,7 +5,7 @@ import 'package:crypt/crypt.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
-import 'package:pyscore/constants/auth_errors.dart';
+import 'package:pyscore/constants/errors/auth_errors.dart';
 import 'package:pyscore/data/user_data.dart';
 import 'package:pyscore/fields/user_fields.dart';
 import 'package:pyscore/models/user.dart';

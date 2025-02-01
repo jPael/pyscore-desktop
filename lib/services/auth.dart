@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
-import 'package:pyscore/constants/auth_errors.dart';
-import 'package:pyscore/constants/user_type.dart';
+import 'package:pyscore/constants/errors/auth_errors.dart';
+import 'package:pyscore/constants/types/user_type.dart';
 import 'package:pyscore/services/auth_helper.dart';
 import 'package:pyscore/utils/results.dart';
 

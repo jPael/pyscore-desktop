@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_code_editor/flutter_code_editor.dart';
 import 'package:pyscore/components/custom_button.dart';
-import 'package:pyscore/constants/custom_button_type.dart';
+import 'package:pyscore/constants/types/custom_button_type.dart';
 import 'package:pyscore/services/python_runner.dart';
 
 class CodeRunnerButton extends StatelessWidget {

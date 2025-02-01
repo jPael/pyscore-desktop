@@ -2,8 +2,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:pyscore/components/custom_button.dart';
 import 'package:pyscore/components/custom_input.dart';
-import 'package:pyscore/constants/auth_errors.dart';
-import 'package:pyscore/constants/user_type.dart';
+import 'package:pyscore/constants/errors/auth_errors.dart';
+import 'package:pyscore/constants/types/user_type.dart';
 import 'package:pyscore/models/my_classrooms.dart';
 import 'package:pyscore/pages/teacher_home_page.dart';
 import 'package:pyscore/services/auth.dart' as auth;
@@ -35,8 +35,7 @@ class TeacherSigninFormState extends State<TeacherSigninForm> {
     if (!formKey.currentState!.validate()) {
       return;
     }
-    final AuthResults res =
-        await auth.signIn(username, password, UserType.teacher);
+    final AuthResults res = await auth.signIn(username, password, UserType.teacher);
 
     if (!res.isSuccess) {
       setState(() {
@@ -78,9 +77,7 @@ class TeacherSigninFormState extends State<TeacherSigninForm> {
                 ),
               ),
               const Spacer(),
-              IconButton(
-                  onPressed: () => Navigator.pop(context),
-                  icon: const Icon(Icons.close))
+              IconButton(onPressed: () => Navigator.pop(context), icon: const Icon(Icons.close))
             ],
           ),
           const SizedBox(height: 40),

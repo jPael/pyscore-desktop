@@ -53,9 +53,7 @@ class ImportDbPageState extends State<ImportDbPage> {
               Container(
                 height: 200,
                 width: 200,
-                color: _dragging
-                    ? Colors.blue.withValues(alpha: 0.4)
-                    : Colors.black26,
+                color: _dragging ? Colors.blue.withValues(alpha: 0.4) : Colors.black26,
                 child: Text(_fileDirectory ?? "Drop your database file here"),
               ),
               Row(
@@ -63,9 +61,7 @@ class ImportDbPageState extends State<ImportDbPage> {
                   FilePickerButton(
                     handleFilePick: handleFilePick,
                   ),
-                  CustomButton(
-                      label: "Update",
-                      onTap: () => Db.instance.replaceDb(_fileDirectory)),
+                  CustomButton(label: "Update", onTap: () => Db.instance.replaceDb(_fileDirectory)),
                   CustomButton(
                       label: "Clear",
                       onTap: () {
@@ -73,6 +69,7 @@ class ImportDbPageState extends State<ImportDbPage> {
                           _fileDirectory = null;
                         });
                       }),
+                  CustomButton(label: "Download db", onTap: () => Db.instance.downloadDb())
                 ],
               )
             ],

@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
-import 'package:pyscore/constants/user_type.dart';
+import 'package:pyscore/constants/types/user_type.dart';
 import 'package:pyscore/data/classroom_data.dart';
 import 'package:pyscore/models/classroom.dart';
 import 'package:pyscore/services/host_connection.dart';

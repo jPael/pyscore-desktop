@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pyscore/components/student_signup_form_step1.dart';
 import 'package:pyscore/components/student_signup_form_step2.dart';
-import 'package:pyscore/constants/user_type.dart';
+import 'package:pyscore/constants/types/user_type.dart';
 import 'package:pyscore/models/user.dart';
 
 class SignupForm extends StatefulWidget {

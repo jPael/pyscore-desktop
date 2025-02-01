@@ -1,6 +1,6 @@
 import "package:flutter/material.dart";
 import "package:http/http.dart" as http;
-import "package:pyscore/constants/host_connect_errors.dart";
+import "package:pyscore/constants/errors/host_connect_errors.dart";
 import "package:pyscore/utils/results.dart";
 
 class HostConnection extends ChangeNotifier {

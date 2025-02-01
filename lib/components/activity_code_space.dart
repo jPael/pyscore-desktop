@@ -1,18 +1,18 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_code_editor/flutter_code_editor.dart';
-// ignore: depend_on_referenced_packages
 import 'package:flutter_highlight/themes/arduino-light.dart';
 import 'package:highlight/languages/python.dart';
 import 'package:pyscore/components/code_runner_button.dart';
 import 'package:pyscore/components/custom_button.dart';
 import 'package:pyscore/components/file_picker_button.dart';
 import 'package:pyscore/components/save_button.dart';
-import 'package:pyscore/constants/custom_button_type.dart';
+import 'package:pyscore/constants/types/custom_button_type.dart';
 import 'package:pyscore/models/file_opener.dart';
 
 class ActivityCodeSpace extends StatefulWidget {
-  const ActivityCodeSpace(
-      {super.key, required this.unlocked, required this.isDone});
+  const ActivityCodeSpace({super.key, required this.unlocked, required this.isDone});
 
   final bool unlocked;
   final bool isDone;
@@ -40,18 +40,37 @@ class ActivityCodeSpaceState extends State<ActivityCodeSpace> {
     });
   }
 
-  void handleSave() {
+  void setSaveState(saved) {
     setState(() {
-      hasNotSaved = false;
+      hasNotSaved = !saved;
     });
   }
 
   void changesMade(String value) {
-    // print(controller.text);
+    _debounce(() {
+      final stopwatch = Stopwatch()..start();
 
-    setState(() {
-      hasNotSaved = true;
+      setState(() {
+        hasNotSaved = true;
+      });
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        stopwatch.stop();
+        print('Keypress processed and UI updated in ${stopwatch.elapsedMilliseconds} ms');
+      });
     });
+  }
+
+  Timer? _debounceTimer;
+  void _debounce(VoidCallback callback) {
+    _debounceTimer?.cancel();
+    _debounceTimer = Timer(const Duration(milliseconds: 300), callback);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    controller.dispose();
+    _debounceTimer?.cancel();
   }
 
   @override
@@ -59,8 +78,7 @@ class ActivityCodeSpaceState extends State<ActivityCodeSpace> {
     if (widget.isDone) {
       return Container(
           decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.all(Radius.circular(8))),
+              color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(8))),
           padding: const EdgeInsets.all(6),
           margin: const EdgeInsets.only(top: 3, right: 6, left: 2, bottom: 6),
           child: Container(
@@ -74,8 +92,7 @@ class ActivityCodeSpaceState extends State<ActivityCodeSpace> {
                   Icon(
                     Icons.check,
                     size: 120,
-                    color:
-                        Theme.of(context).colorScheme.tertiary.withOpacity(0.4),
+                    color: Theme.of(context).colorScheme.tertiary.withValues(alpha: 0.4),
                   ),
                   const SizedBox(
                     height: 12,
@@ -92,8 +109,7 @@ class ActivityCodeSpaceState extends State<ActivityCodeSpace> {
     } else {
       return Container(
         decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(8))),
+            color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(8))),
         padding: const EdgeInsets.all(6),
         margin: const EdgeInsets.only(top: 3, right: 6, left: 2, bottom: 6),
         child: !widget.unlocked
@@ -108,18 +124,14 @@ class ActivityCodeSpaceState extends State<ActivityCodeSpace> {
                       Icon(
                         Icons.lock_rounded,
                         size: 120,
-                        color: Theme.of(context)
-                            .colorScheme
-                            .tertiary
-                            .withOpacity(0.4),
+                        color: Theme.of(context).colorScheme.tertiary.withValues(alpha: 0.4),
                       ),
                       const SizedBox(
                         height: 12,
                       ),
                       const Text(
                         "Start the timer first to start coding",
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.w500),
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                         textAlign: TextAlign.center,
                       ),
                     ],
@@ -146,8 +158,9 @@ class ActivityCodeSpaceState extends State<ActivityCodeSpace> {
                       const Spacer(),
                       SaveButton(
                         hasNotSaved: hasNotSaved,
+                        content: controller.text,
                         filename: filename,
-                        handleSave: handleSave,
+                        setSaveState: setSaveState,
                       ),
                       const SizedBox(
                         width: 6,
@@ -175,8 +188,7 @@ class ActivityCodeSpaceState extends State<ActivityCodeSpace> {
                     height: 3,
                   ),
                   Divider(
-                    color:
-                        Theme.of(context).colorScheme.primary.withOpacity(0.3),
+                    color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.3),
                   ),
                   Expanded(
                       child: SingleChildScrollView(

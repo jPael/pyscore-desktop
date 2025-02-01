@@ -7,7 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:pyscore/components/custom_button.dart';
 import 'package:pyscore/components/teacher_no_post_prompt.dart';
 import 'package:pyscore/data/post_data.dart';
-import 'package:pyscore/constants/custom_button_type.dart';
+import 'package:pyscore/constants/types/custom_button_type.dart';
 import 'package:pyscore/models/posts.dart';
 import 'package:pyscore/pages/teacher_edit_post_page.dart';
 import 'package:pyscore/utils/utils.dart';

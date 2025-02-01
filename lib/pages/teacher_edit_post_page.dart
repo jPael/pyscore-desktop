@@ -12,16 +12,15 @@ import 'package:pyscore/components/custom_input.dart';
 import 'package:pyscore/components/custom_timer_input.dart';
 import 'package:pyscore/components/rich_text_editor.dart';
 import 'package:pyscore/components/teacher_post_delete_button.dart';
-import 'package:pyscore/constants/custom_button_type.dart';
-import 'package:pyscore/constants/custom_input_type.dart';
-import 'package:pyscore/constants/post_errors.dart';
+import 'package:pyscore/constants/types/custom_button_type.dart';
+import 'package:pyscore/constants/types/custom_input_type.dart';
+import 'package:pyscore/constants/errors/post_errors.dart';
 import 'package:pyscore/models/posts.dart';
 import 'package:pyscore/utils/results.dart';
 import 'package:pyscore/utils/utils.dart';
 
 class TeacherEditPostPage extends StatefulWidget {
-  const TeacherEditPostPage(
-      {super.key, required this.post, required this.setPostToDirty});
+  const TeacherEditPostPage({super.key, required this.post, required this.setPostToDirty});
   final Post post;
   final Function setPostToDirty;
 
@@ -105,12 +104,10 @@ class _TeacherEditPostPageState extends State<TeacherEditPostPage> {
       minutes: minutesController.text,
       seconds: secondsController.text,
     );
-    final int points =
-        int.parse(pointsController.text.isEmpty ? "0" : pointsController.text);
+    final int points = int.parse(pointsController.text.isEmpty ? "0" : pointsController.text);
 
     final String title = titleController.text;
-    final String instructions =
-        prettyJson(instructionsController.document.toDelta().toJson());
+    final String instructions = prettyJson(instructionsController.document.toDelta().toJson());
     final String due = dueDate.toString();
 
     Post p = Post(
@@ -130,7 +127,7 @@ class _TeacherEditPostPageState extends State<TeacherEditPostPage> {
       setState(() {
         isLoading = false;
         hasError = true;
-        errorMsg = PostErrors.error(result.code!);
+        errorMsg = PostErrors.error(result.error!);
       });
     } else {
       handleSetPostToDirty();
@@ -196,8 +193,7 @@ class _TeacherEditPostPageState extends State<TeacherEditPostPage> {
             padding: const EdgeInsets.only(right: 12.0),
             child: Row(
               children: [
-                TeacherPostDeleteButton(
-                    post: widget.post, setPostToDirty: handleSetPostToDirty)
+                TeacherPostDeleteButton(post: widget.post, setPostToDirty: handleSetPostToDirty)
               ],
             ),
           )
@@ -225,9 +221,7 @@ class _TeacherEditPostPageState extends State<TeacherEditPostPage> {
                             controller: pointsController,
                             hintText: "",
                             labelText: "Points",
-                            formatters: [
-                              FilteringTextInputFormatter.digitsOnly
-                            ],
+                            formatters: [FilteringTextInputFormatter.digitsOnly],
                             length: 2,
                             inputType: InputType.number),
                       ),
@@ -238,13 +232,11 @@ class _TeacherEditPostPageState extends State<TeacherEditPostPage> {
                           const SizedBox(
                             width: 12,
                           ),
-                          Text(DateFormat("hh:mm a MMMM dd, yyyy")
-                              .format(dueDate)),
+                          Text(DateFormat("hh:mm a MMMM dd, yyyy").format(dueDate)),
                           const SizedBox(
                             width: 12,
                           ),
-                          CustomDatePicker(
-                              date: dueDate, handleChange: handleChangeDate),
+                          CustomDatePicker(date: dueDate, handleChange: handleChangeDate),
                           const SizedBox(
                             width: 12,
                           ),

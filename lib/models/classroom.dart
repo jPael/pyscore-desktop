@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:pyscore/constants/classroom_errors.dart';
+import 'package:pyscore/constants/errors/classroom_errors.dart';
 import 'package:pyscore/data/user_data.dart';
 import 'package:pyscore/fields/classroom_fields.dart';
 import 'package:pyscore/models/my_classrooms.dart';
@@ -69,8 +69,9 @@ class Classroom {
     if (userId == ownerId) {
       owner = await getUserById(ownerId);
     } else {
-      owner = await fetchUserById(ownerId);
-      // print("printing the owner: ${owner}");
+      UserResults result = await fetchUserById(ownerId);
+
+      owner = result.user;
     }
 
     if (owner != null) {

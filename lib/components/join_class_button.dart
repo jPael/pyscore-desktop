@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pyscore/components/custom_button.dart';
 import 'package:pyscore/components/custom_input.dart';
 import 'package:pyscore/components/error_card.dart';
-import 'package:pyscore/constants/classroom_errors.dart';
+import 'package:pyscore/constants/errors/classroom_errors.dart';
 import 'package:pyscore/models/my_classrooms.dart';
 import 'package:pyscore/services/user_services.dart';
 import 'package:pyscore/utils/results.dart';

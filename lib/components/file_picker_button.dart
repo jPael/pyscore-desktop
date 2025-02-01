@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pyscore/components/custom_button.dart';
-import 'package:pyscore/constants/custom_button_type.dart';
+import 'package:pyscore/constants/types/custom_button_type.dart';
 
 class FilePickerButton extends StatefulWidget {
   const FilePickerButton({

@@ -1,4 +1,4 @@
-import 'package:pyscore/constants/user_type.dart';
+import 'package:pyscore/constants/types/user_type.dart';
 import 'package:pyscore/fields/user_fields.dart';
 import 'package:pyscore/models/user.dart';
 import 'package:pyscore/services/db.dart';
@@ -26,12 +26,6 @@ Future<User?> getStudentByStudentId(String studentId) async {
       where: "${UserFields.studentId} = ? AND ${UserFields.userType} = ?",
       whereArgs: [studentId, UserType.student]);
 
-  // print(result.length);
-  // for (var r in result) {
-  //   print(r['id']);
-  //   print(r['password']);
-  // }
-
   if (result.isEmpty) {
     return null;
   }
@@ -41,8 +35,8 @@ Future<User?> getStudentByStudentId(String studentId) async {
 
 Future<User?> getUserByUsernameAndType(String username, String type) async {
   final db = await Db.instance.db;
-  final result = await db.query(userTableName,
-      where: "username = ? AND user_type = ?", whereArgs: [username, type]);
+  final result = await db
+      .query(userTableName, where: "username = ? AND user_type = ?", whereArgs: [username, type]);
 
   // print(result.length);
   // for (var r in result) {
@@ -58,8 +52,7 @@ Future<User?> getUserByUsernameAndType(String username, String type) async {
 Future<User?> getUserById(String id) async {
   final db = await Db.instance.db;
 
-  final result =
-      await db.query(userTableName, where: "id = ?", whereArgs: [id]);
+  final result = await db.query(userTableName, where: "id = ?", whereArgs: [id]);
 
   if (result.isEmpty) return null;
 

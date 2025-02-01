@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:pyscore/components/connection_status.dart';
 import 'package:pyscore/components/custom_button.dart';
-import 'package:pyscore/constants/custom_button_type.dart';
+import 'package:pyscore/constants/types/custom_button_type.dart';
 import 'package:pyscore/pages/import_db_page.dart';
 import 'package:pyscore/pages/student_login_page.dart';
 import 'package:pyscore/pages/teacher_login_page.dart';
@@ -24,8 +24,8 @@ class LandingScreen extends StatelessWidget {
       backgroundColor: Theme.of(context).colorScheme.primary,
       floatingActionButton: FloatingActionButton(
           child: const Icon(Icons.import_contacts),
-          onPressed: () => Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const ImportDbPage()))),
+          onPressed: () => Navigator.push(
+              context, MaterialPageRoute(builder: (context) => const ImportDbPage()))),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -35,8 +35,7 @@ class LandingScreen extends StatelessWidget {
               children: [
                 Text("{",
                     style: GoogleFonts.getFont('Montserrat',
-                        color: Theme.of(context).colorScheme.inversePrimary,
-                        fontSize: 8 * 12)),
+                        color: Theme.of(context).colorScheme.inversePrimary, fontSize: 8 * 12)),
                 Text(" PyScore ",
                     style: GoogleFonts.getFont('Montserrat',
                         color: Theme.of(context).colorScheme.inversePrimary,
@@ -44,15 +43,13 @@ class LandingScreen extends StatelessWidget {
                         fontWeight: FontWeight.bold)),
                 Text("}",
                     style: GoogleFonts.getFont('Montserrat',
-                        color: Theme.of(context).colorScheme.inversePrimary,
-                        fontSize: 8 * 12)),
+                        color: Theme.of(context).colorScheme.inversePrimary, fontSize: 8 * 12)),
               ],
             ),
             Text(
               "Northeastern Mindanao State University",
               style: GoogleFonts.getFont('Montserrat',
-                  color: Theme.of(context).colorScheme.inversePrimary,
-                  fontSize: 8 * 4),
+                  color: Theme.of(context).colorScheme.inversePrimary, fontSize: 8 * 4),
             ),
             const SizedBox(
               height: 88,
@@ -69,15 +66,12 @@ class LandingScreen extends StatelessWidget {
                       toolTip: !isConnected
                           ? "You are not connected to any host. Connect to the host first by click the status button on the top right corner"
                           : null,
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 12, horizontal: 42),
+                      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 42),
                       size: CustomButtonSize.lg,
                       label: "Student",
                       isDisabled: !isConnected,
-                      onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const StudentLoginPage()))),
+                      onTap: () => Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => const StudentLoginPage()))),
                 );
               },
             ),
@@ -85,14 +79,11 @@ class LandingScreen extends StatelessWidget {
               height: 10,
             ),
             CustomButton(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 12, horizontal: 42),
+                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 42),
                 size: CustomButtonSize.lg,
                 label: "Teacher",
                 onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const TeacherLoginPage()))),
+                    context, MaterialPageRoute(builder: (context) => const TeacherLoginPage()))),
           ],
         ),
       ),

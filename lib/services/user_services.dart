@@ -4,7 +4,9 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
-import 'package:pyscore/constants/classroom_errors.dart';
+import 'package:pyscore/constants/errors/classroom_errors.dart';
+import 'package:pyscore/constants/errors/user_errors.dart';
+import 'package:pyscore/models/posts.dart';
 import 'package:pyscore/models/user.dart';
 import 'package:pyscore/services/host_connection.dart';
 import 'package:pyscore/services/server/server_route_paths/class_routes.dart';
@@ -17,11 +19,6 @@ Future<ClassroomResults> joinClass(String userId, String classCode) async {
     return ClassroomResults(success: false, error: ClassroomErrorCode.classroomCodeIsEmpty);
   }
 
-  // Classroom? classroom = await getClassroomByCode(classCode);
-
-// now proceed with joining the classroom
-  // bool joinedSuccessfully = await joinClassroom(userId, classroom.id!);
-
   final String? ip = HostConnection().ip;
   final String? port = HostConnection().port;
 
@@ -32,7 +29,6 @@ Future<ClassroomResults> joinClass(String userId, String classCode) async {
   final url = Uri.parse("${rootUrlBuilder(ip, port)}${ClassRoutes.joinClass}");
 
   try {
-    print("sending http request to join");
     final Response res = await http.post(url,
         headers: {
           'content-type': "application/json",
@@ -56,7 +52,37 @@ Future<ClassroomResults> joinClass(String userId, String classCode) async {
   }
 }
 
-Future<User?> fetchUserById(String id) async {
+Future<UserResults> fetchUserById(String id) async {
+  if (id.isEmpty) {
+    return UserResults(success: false, error: UserErrorCodes.emptyUsername);
+  }
+
+  final String? ip = HostConnection().ip;
+  final String? port = HostConnection().port;
+
+  if (ip == null) {
+    return UserResults(success: false, error: UserErrorCodes.notConnected);
+  }
+
+  try {
+    final Uri url = Uri.parse("${rootUrlBuilder(ip, port)}${UserRoutes.fetchUserById}")
+        .replace(queryParameters: {UserParamsKey.userId: id});
+
+    final http.Response res = await http.get(url);
+
+    User owner = User.fromJson(jsonDecode(res.body) as Map<String, Object?>);
+
+    return UserResults(success: true, user: owner);
+  } catch (e, printStack) {
+    if (kDebugMode) {
+      print(e);
+      print(printStack);
+    }
+    return UserResults(success: false, error: UserErrorCodes.serverError);
+  }
+}
+
+Future<List<Post>?> fetchAllPostByClassId(String id) async {
   if (id.isEmpty) {
     return null;
   }
@@ -68,12 +94,18 @@ Future<User?> fetchUserById(String id) async {
     return null;
   }
 
-  final Uri url = Uri.parse("${rootUrlBuilder(ip, port)}${UserRoutes.fetchUserById}")
-      .replace(queryParameters: {UserParamsKey.userId: id});
+  final Uri url = Uri.parse("${rootUrlBuilder(ip, port)}${ClassRoutes.getAllPostByClassId}")
+      .replace(queryParameters: {ClassParamsKey.classId: id});
 
   final http.Response res = await http.get(url);
 
-  User? owner = User.fromJson(jsonDecode(res.body) as Map<String, Object?>);
+  // List<Map<String, Object?>> postObject = jsonDecode(res.body) as List<Map<String, Object?>>;
+  List<dynamic> tempPostObject = jsonDecode(res.body);
 
-  return owner;
+  List<Map<String, Object?>> postObject =
+      tempPostObject.map((p) => p as Map<String, Object?>).toList();
+
+  List<Post> posts = await Future.wait(postObject.map((p) => Post.fromJson(p)));
+
+  return posts;
 }

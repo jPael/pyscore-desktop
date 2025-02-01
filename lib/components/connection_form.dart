@@ -3,8 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:pyscore/components/custom_button.dart';
 import 'package:pyscore/components/custom_input.dart';
 import 'package:pyscore/components/error_card.dart';
-import 'package:pyscore/constants/custom_button_type.dart';
-import 'package:pyscore/constants/host_connect_errors.dart';
+import 'package:pyscore/constants/types/custom_button_type.dart';
+import 'package:pyscore/constants/errors/host_connect_errors.dart';
 import 'package:pyscore/services/host_connection.dart';
 import 'package:pyscore/utils/results.dart';
 

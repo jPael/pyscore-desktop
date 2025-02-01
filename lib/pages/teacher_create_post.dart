@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_quill/flutter_quill.dart';
@@ -11,9 +10,9 @@ import 'package:pyscore/components/custom_input.dart';
 import 'package:pyscore/components/custom_timer_input.dart';
 import 'package:pyscore/components/error_card.dart';
 import 'package:pyscore/components/rich_text_editor.dart';
-import 'package:pyscore/constants/custom_input_type.dart';
-import 'package:pyscore/constants/post_errors.dart';
-import 'package:pyscore/constants/custom_button_type.dart';
+import 'package:pyscore/constants/types/custom_button_type.dart';
+import 'package:pyscore/constants/types/custom_input_type.dart';
+import 'package:pyscore/constants/errors/post_errors.dart';
 import 'package:pyscore/models/classroom.dart';
 import 'package:pyscore/models/my_classrooms.dart';
 import 'package:pyscore/models/posts.dart';
@@ -73,12 +72,10 @@ class TeacherCreatePostState extends State<TeacherCreatePost> {
         minutes: minutesController.text,
         seconds: secondsController.text);
 
-    final int points =
-        int.parse(pointsController.text.isEmpty ? "0" : pointsController.text);
+    final int points = int.parse(pointsController.text.isEmpty ? "0" : pointsController.text);
 
     final String title = titleController.text;
-    final String instructions =
-        prettyJson(instructionsController.document.toDelta().toJson());
+    final String instructions = prettyJson(instructionsController.document.toDelta().toJson());
     final String due = dueDate.toString();
 
     Post p = Post(
@@ -95,7 +92,7 @@ class TeacherCreatePostState extends State<TeacherCreatePost> {
       setState(() {
         isLoading = false;
         hasError = true;
-        errorMsg = PostErrors.error(result.code!);
+        errorMsg = PostErrors.error(result.error!);
       });
     }
 
@@ -145,9 +142,7 @@ class TeacherCreatePostState extends State<TeacherCreatePost> {
                             controller: pointsController,
                             hintText: "",
                             labelText: "Points",
-                            formatters: [
-                              FilteringTextInputFormatter.digitsOnly
-                            ],
+                            formatters: [FilteringTextInputFormatter.digitsOnly],
                             length: 2,
                             inputType: InputType.number),
                       ),
@@ -157,13 +152,11 @@ class TeacherCreatePostState extends State<TeacherCreatePost> {
                           const SizedBox(
                             width: 12,
                           ),
-                          Text(DateFormat("hh:mm a MMMM dd, yyyy")
-                              .format(dueDate)),
+                          Text(DateFormat("hh:mm a MMMM dd, yyyy").format(dueDate)),
                           const SizedBox(
                             width: 12,
                           ),
-                          CustomDatePicker(
-                              date: dueDate, handleChange: handleChangeDate),
+                          CustomDatePicker(date: dueDate, handleChange: handleChangeDate),
                           const SizedBox(
                             width: 12,
                           ),
@@ -209,10 +202,7 @@ class TeacherCreatePostState extends State<TeacherCreatePost> {
                       const SizedBox(
                         width: 12,
                       ),
-                      CustomButton(
-                          isLoading: isLoading,
-                          label: "Post",
-                          onTap: handlePost),
+                      CustomButton(isLoading: isLoading, label: "Post", onTap: handlePost),
                     ],
                   )
                 ],

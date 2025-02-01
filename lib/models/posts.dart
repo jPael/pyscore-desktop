@@ -1,4 +1,5 @@
-import 'package:pyscore/constants/post_errors.dart';
+import 'package:flutter/foundation.dart';
+import 'package:pyscore/constants/errors/post_errors.dart';
 import 'package:pyscore/data/classroom_data.dart';
 import 'package:pyscore/fields/post_fields.dart';
 import 'package:pyscore/models/classroom.dart';
@@ -34,8 +35,7 @@ class Post {
       this.updatedAt});
 
   static Future<Post> fromJson(Map<String, Object?> json) async {
-    Classroom? _classroom =
-        await getClassroomById(json[PostFields.classId] as String);
+    Classroom? fetchedClassroom = await getClassroomById(json[PostFields.classId] as String);
 
     Post post = Post(
         id: json[PostFields.id] as String,
@@ -47,7 +47,7 @@ class Post {
         due: json[PostFields.due] as String,
         createdAt: json[PostFields.createdAt] as String,
         updatedAt: json[PostFields.updatedAt] as String,
-        classroom: _classroom!);
+        classroom: fetchedClassroom);
 
     return post;
   }
@@ -80,16 +80,17 @@ class Post {
       int insertId = await db.insert(postTableName, toJson());
 
       if (insertId == 0) {
-        return PostResults(
-            success: false, code: PostErrorCode.postCreationError);
+        return PostResults(success: false, error: PostErrorCode.postCreationError);
       }
 
       return PostResults(success: true);
     } catch (e, stackTrace) {
-      print(e);
-      print(stackTrace);
+      if (kDebugMode) {
+        print(e);
+        print(stackTrace);
+      }
 
-      return PostResults(success: false, code: PostErrorCode.serverError);
+      return PostResults(success: false, error: PostErrorCode.serverError);
     }
   }
 
@@ -100,19 +101,21 @@ class Post {
     updatedAt = postUpdatedAt;
 
     try {
-      int updateId = await db.update(postTableName, toJson(),
-          where: "${PostFields.id} = ?", whereArgs: [id!]);
+      int updateId =
+          await db.update(postTableName, toJson(), where: "${PostFields.id} = ?", whereArgs: [id!]);
 
       if (updateId == 0) {
-        return PostResults(success: false, code: PostErrorCode.postUpdateError);
+        return PostResults(success: false, error: PostErrorCode.postUpdateError);
       }
 
       return PostResults(success: true);
     } catch (e, stackTrace) {
-      print(e);
-      print(stackTrace);
+      if (kDebugMode) {
+        print(e);
+        print(stackTrace);
+      }
 
-      return PostResults(success: false, code: PostErrorCode.serverError);
+      return PostResults(success: false, error: PostErrorCode.serverError);
     }
   }
 }

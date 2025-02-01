@@ -1,4 +1,4 @@
-import 'package:pyscore/constants/post_errors.dart';
+import 'package:pyscore/constants/errors/post_errors.dart';
 import 'package:pyscore/fields/post_fields.dart';
 import 'package:pyscore/models/posts.dart';
 import 'package:pyscore/services/db.dart';
@@ -14,9 +14,19 @@ Future<List<Post>> getAllPostsByClassId(String id) async {
 
   List<Post> classedPost = await Future.wait(result.map((r) => Post.fromJson(r)).toList());
 
-  // await Future.delayed(const Duration(seconds: 3));
-
   return classedPost;
+}
+
+Future<Post?> getPostById(String id) async {
+  final Database db = await Db.instance.db;
+
+  final result = await db.query(postTableName, where: "${PostFields.id} = ?", whereArgs: [id]);
+
+  if (result.isEmpty) return null;
+
+  Post post = await Post.fromJson(result[0]);
+
+  return post;
 }
 
 Future<PostResults> deletePostById(String postId) async {
@@ -29,7 +39,7 @@ Future<PostResults> deletePostById(String postId) async {
   );
 
   if (result == 0) {
-    return PostResults(success: false, code: PostErrorCode.postDeletionFailed);
+    return PostResults(success: false, error: PostErrorCode.postDeletionFailed);
   }
 
   return PostResults(success: true);

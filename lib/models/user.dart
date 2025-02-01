@@ -1,12 +1,10 @@
+import 'package:crypt/crypt.dart';
 import 'package:flutter/foundation.dart';
-import 'package:pyscore/constants/auth_errors.dart';
+import 'package:pyscore/constants/errors/auth_errors.dart';
 import 'package:pyscore/fields/user_fields.dart';
 import 'package:pyscore/services/auth.dart' as auth;
-import 'package:pyscore/services/db.dart';
 import 'package:pyscore/utils/results.dart';
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:uuid/uuid.dart';
-import 'package:crypt/crypt.dart';
 
 const String userTableName = "User";
 

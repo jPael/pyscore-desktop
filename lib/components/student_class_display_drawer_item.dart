@@ -8,20 +8,17 @@ import 'package:pyscore/pages/student_activity_page.dart';
 import 'package:pyscore/utils/utils.dart';
 
 class StudentClassDisplayDrawerItem extends StatefulWidget {
-  const StudentClassDisplayDrawerItem(
-      {super.key, required this.currentPost, required this.index});
+  const StudentClassDisplayDrawerItem({super.key, required this.currentPost, required this.index});
 
   final int index;
   final Post currentPost;
 
   @override
-  StudentClassDisplayDrawerItemState createState() =>
-      StudentClassDisplayDrawerItemState();
+  StudentClassDisplayDrawerItemState createState() => StudentClassDisplayDrawerItemState();
 }
 
 // finish the student side
-class StudentClassDisplayDrawerItemState
-    extends State<StudentClassDisplayDrawerItem> {
+class StudentClassDisplayDrawerItemState extends State<StudentClassDisplayDrawerItem> {
   int? hoveredIndex;
 
   @override
@@ -29,9 +26,7 @@ class StudentClassDisplayDrawerItemState
     String? instruction = "No instruction";
 
     try {
-      instruction =
-          Document.fromJson(jsonDecode(widget.currentPost.instruction))
-              .toPlainText();
+      instruction = Document.fromJson(jsonDecode(widget.currentPost.instruction)).toPlainText();
     } catch (e) {
       if (kDebugMode) {
         print(e);
@@ -39,11 +34,8 @@ class StudentClassDisplayDrawerItemState
     }
 
     return GestureDetector(
-      onTap: () => Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) =>
-                  StudentActivityPage(post: widget.currentPost))),
+      onTap: () => Navigator.push(context,
+          MaterialPageRoute(builder: (context) => StudentActivityPage(post: widget.currentPost))),
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
         onEnter: (_) {
@@ -58,6 +50,7 @@ class StudentClassDisplayDrawerItemState
         },
         child: Badge(
           backgroundColor: Colors.green[600],
+          isLabelVisible: false,
           label: const Icon(
             Icons.check,
             color: Colors.white,
@@ -67,8 +60,7 @@ class StudentClassDisplayDrawerItemState
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
                   borderRadius: const BorderRadius.all(Radius.circular(8)),
-                  border:
-                      Border.all(color: Theme.of(context).colorScheme.primary)),
+                  border: Border.all(color: Theme.of(context).colorScheme.primary)),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -81,8 +73,7 @@ class StudentClassDisplayDrawerItemState
                           children: [
                             const Text(
                               "Posted on ",
-                              style: TextStyle(
-                                  fontSize: 12, fontWeight: FontWeight.w600),
+                              style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
                             ),
                             Text(
                               readableDateTime(widget.currentPost.createdAt!),
@@ -91,8 +82,7 @@ class StudentClassDisplayDrawerItemState
                             const Spacer(),
                             const Text(
                               "Due on ",
-                              style: TextStyle(
-                                  fontSize: 12, fontWeight: FontWeight.w600),
+                              style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
                             ),
                             Text(
                               readableDateTime(widget.currentPost.due),
@@ -105,27 +95,24 @@ class StudentClassDisplayDrawerItemState
                           children: [
                             Text(
                               widget.currentPost.title,
-                              style: const TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.w600),
+                              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                             ),
-                            const Row(
+                            Row(
                               children: [
-                                SizedBox(
+                                const SizedBox(
                                   width: 6,
                                 ),
-                                Text(
+                                const Text(
                                   "Points ",
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w600),
+                                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
                                 ),
-                                Text(
-                                  "80",
-                                  style: TextStyle(
-                                      decoration: TextDecoration.underline,
-                                      fontWeight: FontWeight.w600),
-                                ),
-                                Text("/100")
+                                // Text(
+                                //   "80",
+                                //   style: TextStyle(
+                                //       decoration: TextDecoration.underline,
+                                //       fontWeight: FontWeight.w600),
+                                // ),
+                                Text(widget.currentPost.points.toString())
                               ],
                             )
                           ],
@@ -136,7 +123,11 @@ class StudentClassDisplayDrawerItemState
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(instruction!),
+                            Text(
+                              instruction!,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ],
                         )
                       ],

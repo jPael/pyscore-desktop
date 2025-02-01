@@ -1,4 +1,4 @@
-import 'package:pyscore/constants/custom_button_type.dart';
+import 'package:pyscore/constants/types/custom_button_type.dart';
 import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {
@@ -63,14 +63,11 @@ class CustomButton extends StatelessWidget {
       child: ElevatedButton(
           style: ElevatedButton.styleFrom(
               elevation: 5,
-              padding: padding ??
-                  const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+              padding: padding ?? const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
               backgroundColor: buttonColor,
-              shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(8)))),
-          onPressed: isDisabled! || isLoading == null || isLoading == true
-              ? null
-              : onTap,
+              shape:
+                  const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8)))),
+          onPressed: isDisabled! || isLoading == null || isLoading == true ? null : onTap,
           child: Row(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,

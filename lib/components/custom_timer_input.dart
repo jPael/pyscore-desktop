@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pyscore/components/custom_input.dart';
-import 'package:pyscore/constants/custom_input_type.dart';
+import 'package:pyscore/constants/types/custom_input_type.dart';
 
 class CustomTimerInput extends StatefulWidget {
   const CustomTimerInput(

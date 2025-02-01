@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:pyscore/constants/custom_input_type.dart';
+import 'package:pyscore/constants/types/custom_input_type.dart';
 
 class CustomInput extends StatefulWidget {
   const CustomInput(

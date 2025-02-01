@@ -35,8 +35,6 @@ dependencies:
    desktop_drop: ^0.5.0
    cross_file: ^0.3.4+2
    window_manager: ^0.4.3
-   flython:
-      git: https://github.com/jPael/flython.git
    flutter_localizations:
       sdk: flutter
    mini_server: ^1.1.0

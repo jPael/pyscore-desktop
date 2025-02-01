@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pyscore/components/custom_button.dart';
 import 'package:pyscore/components/custom_input.dart';
-import 'package:pyscore/constants/classroom_errors.dart';
-import 'package:pyscore/constants/custom_button_type.dart';
+import 'package:pyscore/constants/errors/classroom_errors.dart';
+import 'package:pyscore/constants/types/custom_button_type.dart';
 import 'package:pyscore/models/classroom.dart';
 import 'package:pyscore/models/my_classrooms.dart';
 import 'package:provider/provider.dart';
@@ -73,8 +73,7 @@ class CreateClassButtonState extends State<CreateClassButton> {
                       children: [
                         Text(
                           "Create a class",
-                          style: TextStyle(
-                              fontSize: 24, fontWeight: FontWeight.w600),
+                          style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
                         ),
                       ],
                     ),
@@ -85,9 +84,7 @@ class CreateClassButtonState extends State<CreateClassButton> {
                       height: 12,
                     ),
                     CustomInput(
-                        controller: classroomNameController,
-                        hintText: "",
-                        labelText: "Name"),
+                        controller: classroomNameController, hintText: "", labelText: "Name"),
                     const SizedBox(
                       height: 12,
                     ),
@@ -96,9 +93,7 @@ class CreateClassButtonState extends State<CreateClassButton> {
                         children: [
                           const Text(
                             "Error:",
-                            style: TextStyle(
-                                color: Colors.redAccent,
-                                fontWeight: FontWeight.bold),
+                            style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(
                             width: 6,
@@ -153,7 +148,6 @@ class CreateClassButtonState extends State<CreateClassButton> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomButton(
-        label: "Create class", onTap: () => showCreateClassroomDialog(context));
+    return CustomButton(label: "Create class", onTap: () => showCreateClassroomDialog(context));
   }
 }

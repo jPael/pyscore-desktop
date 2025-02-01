@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pyscore/components/custom_button.dart';
 import 'package:pyscore/data/classroom_data.dart';
-import 'package:pyscore/constants/custom_button_type.dart';
+import 'package:pyscore/constants/types/custom_button_type.dart';
 import 'package:pyscore/models/classroom.dart';
 import 'package:pyscore/models/my_classrooms.dart';
 
@@ -12,12 +12,10 @@ class TeacherDeleteClassroomButton extends StatefulWidget {
   final Classroom classroom;
 
   @override
-  TeacherDeleteClassroomButtonState createState() =>
-      TeacherDeleteClassroomButtonState();
+  TeacherDeleteClassroomButtonState createState() => TeacherDeleteClassroomButtonState();
 }
 
-class TeacherDeleteClassroomButtonState
-    extends State<TeacherDeleteClassroomButton> {
+class TeacherDeleteClassroomButtonState extends State<TeacherDeleteClassroomButton> {
   Future<void> handleDelete() async {
     final String classroomId = widget.classroom.id!;
 

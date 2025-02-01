@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pyscore/components/custom_button.dart';
 import 'package:pyscore/components/custom_input.dart';
-import 'package:pyscore/constants/classroom_errors.dart';
-import 'package:pyscore/constants/custom_button_type.dart';
+import 'package:pyscore/constants/errors/classroom_errors.dart';
+import 'package:pyscore/constants/types/custom_button_type.dart';
 import 'package:pyscore/models/classroom.dart';
 import 'package:pyscore/models/my_classrooms.dart';
 import 'package:pyscore/models/user.dart';
@@ -15,8 +15,7 @@ class CreateClassFloatingButton extends StatefulWidget {
   final User user;
 
   @override
-  CreateClassFloatingButtonState createState() =>
-      CreateClassFloatingButtonState();
+  CreateClassFloatingButtonState createState() => CreateClassFloatingButtonState();
 }
 
 class CreateClassFloatingButtonState extends State<CreateClassFloatingButton> {
@@ -67,8 +66,7 @@ class CreateClassFloatingButtonState extends State<CreateClassFloatingButton> {
                       children: [
                         Text(
                           "Create a class",
-                          style: TextStyle(
-                              fontSize: 24, fontWeight: FontWeight.w600),
+                          style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
                         ),
                       ],
                     ),
@@ -79,9 +77,7 @@ class CreateClassFloatingButtonState extends State<CreateClassFloatingButton> {
                       height: 12,
                     ),
                     CustomInput(
-                        controller: classroomNameController,
-                        hintText: "",
-                        labelText: "Name"),
+                        controller: classroomNameController, hintText: "", labelText: "Name"),
                     const SizedBox(
                       height: 12,
                     ),
@@ -90,9 +86,7 @@ class CreateClassFloatingButtonState extends State<CreateClassFloatingButton> {
                         children: [
                           const Text(
                             "Error:",
-                            style: TextStyle(
-                                color: Colors.redAccent,
-                                fontWeight: FontWeight.bold),
+                            style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(
                             width: 6,

@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:crypt/crypt.dart';
 import 'package:mini_server/mini_server.dart';
-import 'package:pyscore/constants/auth_errors.dart';
+import 'package:pyscore/constants/errors/auth_errors.dart';
 import 'package:pyscore/fields/user_fields.dart';
 import 'package:pyscore/models/user.dart';
 import 'package:pyscore/services/db.dart';
@@ -20,6 +20,11 @@ void authRoutes(MiniServer server) {
 
     final row = await db.query(userTableName,
         where: "${UserFields.studentId} = ?", whereArgs: [data[UserFields.studentId]]);
+
+    if (row.isEmpty) {
+      req.response.statusCode = HttpStatus.notFound;
+      return;
+    }
 
     final String inputPassword = data[UserFields.password] as String;
     final String storedPassword = row[0][UserFields.password] as String;
